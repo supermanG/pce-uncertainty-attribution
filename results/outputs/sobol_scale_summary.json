@@ -1,0 +1,273 @@
+{
+  "molecular_design": {
+    "per_step": [
+      {
+        "step": "0",
+        "label": "scaffold",
+        "Km1": 19,
+        "D": 79.2156096164266,
+        "Dnorm": 4.169242611390874,
+        "fo_sum_mean": 0.5642419349431256,
+        "to_sum_mean": 1.4357580650568746,
+        "interaction_mean": 0.8715161301137487
+      },
+      {
+        "step": "1",
+        "label": "scaffold",
+        "Km1": 19,
+        "D": 79.54107437869865,
+        "Dnorm": 4.186372335720982,
+        "fo_sum_mean": 0.6005909399377677,
+        "to_sum_mean": 1.3994090600622322,
+        "interaction_mean": 0.7988181201244643
+      },
+      {
+        "step": "2",
+        "label": "linker",
+        "Km1": 19,
+        "D": 43.73934930970792,
+        "Dnorm": 2.3020710163004168,
+        "fo_sum_mean": 0.59455470964926,
+        "to_sum_mean": 1.40544529035074,
+        "interaction_mean": 0.8108905807014799
+      },
+      {
+        "step": "3",
+        "label": "decoration",
+        "Km1": 19,
+        "D": 52.425766126654516,
+        "Dnorm": 2.7592508487712903,
+        "fo_sum_mean": 0.582243156287092,
+        "to_sum_mean": 1.4177568437129082,
+        "interaction_mean": 0.8355136874258161
+      },
+      {
+        "step": "4",
+        "label": "decoration",
+        "Km1": 19,
+        "D": 87.2268240933306,
+        "Dnorm": 4.5908854785963475,
+        "fo_sum_mean": 0.5735362651056367,
+        "to_sum_mean": 1.426463734894363,
+        "interaction_mean": 0.8529274697887265
+      }
+    ],
+    "fo_sum_mean": 0.5830334011845764,
+    "fo_sum_max": 0.890420037688194,
+    "to_sum_mean": 1.416966598815423,
+    "to_sum_max": 1.8667122800482177,
+    "to_frac_gt1": 1.0,
+    "rank_D": [
+      "decoration",
+      "scaffold",
+      "scaffold",
+      "decoration",
+      "linker"
+    ],
+    "rank_Dnorm": [
+      "decoration",
+      "scaffold",
+      "scaffold",
+      "decoration",
+      "linker"
+    ],
+    "rank_changes": false
+  },
+  "sachs": {
+    "per_step": [
+      {
+        "step": "0",
+        "label": "step 0",
+        "Km1": 110,
+        "D": 626461.6097337493,
+        "Dnorm": 5695.105543034085,
+        "fo_sum_mean": 0.6492224609502092,
+        "to_sum_mean": 1.3507775390497911,
+        "interaction_mean": 0.7015550780995811
+      },
+      {
+        "step": "1",
+        "label": "step 1",
+        "Km1": 110,
+        "D": 844263.6278278392,
+        "Dnorm": 7675.123889343993,
+        "fo_sum_mean": 0.6964214942312478,
+        "to_sum_mean": 1.3035785057687521,
+        "interaction_mean": 0.6071570115375042
+      },
+      {
+        "step": "2",
+        "label": "step 2",
+        "Km1": 110,
+        "D": 1133991.30200604,
+        "Dnorm": 10309.011836418545,
+        "fo_sum_mean": 0.7210622560442365,
+        "to_sum_mean": 1.2789377439557637,
+        "interaction_mean": 0.5578754879115273
+      },
+      {
+        "step": "3",
+        "label": "step 3",
+        "Km1": 110,
+        "D": 1114789.1497132182,
+        "Dnorm": 10134.44681557471,
+        "fo_sum_mean": 0.669529784297335,
+        "to_sum_mean": 1.3304702157026653,
+        "interaction_mean": 0.6609404314053302
+      },
+      {
+        "step": "4",
+        "label": "step 4",
+        "Km1": 110,
+        "D": 1393706.149801142,
+        "Dnorm": 12670.05590728311,
+        "fo_sum_mean": 0.680363656256644,
+        "to_sum_mean": 1.3196363437433563,
+        "interaction_mean": 0.6392726874867124
+      },
+      {
+        "step": "5",
+        "label": "step 5",
+        "Km1": 110,
+        "D": 1541275.5102142855,
+        "Dnorm": 14011.595547402596,
+        "fo_sum_mean": 0.6553361975099631,
+        "to_sum_mean": 1.3446638024900368,
+        "interaction_mean": 0.6893276049800736
+      },
+      {
+        "step": "6",
+        "label": "step 6",
+        "Km1": 110,
+        "D": 1849283.8224155887,
+        "Dnorm": 16811.67111286899,
+        "fo_sum_mean": 0.6177148115618668,
+        "to_sum_mean": 1.3822851884381329,
+        "interaction_mean": 0.7645703768762663
+      },
+      {
+        "step": "7",
+        "label": "step 7",
+        "Km1": 110,
+        "D": 2278506.260458259,
+        "Dnorm": 20713.693276893264,
+        "fo_sum_mean": 0.5836148059186949,
+        "to_sum_mean": 1.4163851940813048,
+        "interaction_mean": 0.8327703881626104
+      },
+      {
+        "step": "8",
+        "label": "step 8",
+        "Km1": 110,
+        "D": 3542874.466948445,
+        "Dnorm": 32207.949699531317,
+        "fo_sum_mean": 0.6376138719736485,
+        "to_sum_mean": 1.3623861280263518,
+        "interaction_mean": 0.7247722560527027
+      },
+      {
+        "step": "9",
+        "label": "step 9",
+        "Km1": 110,
+        "D": 3824496.7349703615,
+        "Dnorm": 34768.15213609419,
+        "fo_sum_mean": 0.6000993468062521,
+        "to_sum_mean": 1.399900653193748,
+        "interaction_mean": 0.7998013063874961
+      },
+      {
+        "step": "10",
+        "label": "step 10",
+        "Km1": 110,
+        "D": 4547348.354808839,
+        "Dnorm": 41339.530498262175,
+        "fo_sum_mean": 0.6616309530372425,
+        "to_sum_mean": 1.3383690469627572,
+        "interaction_mean": 0.676738093925515
+      },
+      {
+        "step": "11",
+        "label": "step 11",
+        "Km1": 110,
+        "D": 6303217.900741953,
+        "Dnorm": 57301.98091583594,
+        "fo_sum_mean": 0.7019930796994341,
+        "to_sum_mean": 1.2980069203005662,
+        "interaction_mean": 0.5960138406011318
+      }
+    ],
+    "fo_sum_mean": 0.6562168931905644,
+    "fo_sum_max": 0.9581374949214623,
+    "to_sum_mean": 1.3437831068094355,
+    "to_sum_max": 1.8184678069207627,
+    "to_frac_gt1": 1.0,
+    "rank_D": [
+      "step 11",
+      "step 10",
+      "step 9",
+      "step 8",
+      "step 7",
+      "step 6",
+      "step 5",
+      "step 4",
+      "step 2",
+      "step 3",
+      "step 1",
+      "step 0"
+    ],
+    "rank_Dnorm": [
+      "step 11",
+      "step 10",
+      "step 9",
+      "step 8",
+      "step 7",
+      "step 6",
+      "step 5",
+      "step 4",
+      "step 2",
+      "step 3",
+      "step 1",
+      "step 0"
+    ],
+    "rank_changes": false
+  },
+  "buchwald_hartwig": {
+    "labels": [
+      "catalyst",
+      "base",
+      "aryl_halide",
+      "additive"
+    ],
+    "K": [
+      4,
+      3,
+      16,
+      24
+    ],
+    "D": [
+      71.3,
+      69.0,
+      105.6,
+      179.2
+    ],
+    "Dnorm": [
+      23.766666666666666,
+      34.5,
+      7.04,
+      7.791304347826086
+    ],
+    "rank_D": [
+      "additive",
+      "aryl_halide",
+      "catalyst",
+      "base"
+    ],
+    "rank_Dnorm": [
+      "base",
+      "catalyst",
+      "additive",
+      "aryl_halide"
+    ],
+    "corr_D_Km1": 0.9569011999241324
+  }
+}

@@ -1,0 +1,106 @@
+{
+  "members_dir": "results/buchwald_hartwig",
+  "n": 150,
+  "degree": 3,
+  "basis": "apc",
+  "ranking_stability": {
+    "5": {
+      "explained_var": 0.38422879576683044,
+      "max_distance_corr": 0.2662707734231668,
+      "mode_mean_sobol": [
+        0.0425,
+        0.0167,
+        0.012,
+        0.0432,
+        0.0018
+      ],
+      "mode_rank": [
+        4,
+        1,
+        2,
+        3,
+        5
+      ],
+      "per_step_top_mode": {
+        "catalyst": 1,
+        "base": 1,
+        "aryl_halide": 1,
+        "additive": 4
+      }
+    },
+    "7": {
+      "explained_var": 0.48671674728393555,
+      "max_distance_corr": 0.28669774757486893,
+      "mode_mean_sobol": [
+        0.0165,
+        0.0197,
+        0.0206,
+        0.0305,
+        0.0054,
+        0.1145,
+        0.0037
+      ],
+      "mode_rank": [
+        6,
+        4,
+        3,
+        2,
+        1,
+        5,
+        7
+      ],
+      "per_step_top_mode": {
+        "catalyst": 6,
+        "base": 6,
+        "aryl_halide": 6,
+        "additive": 4
+      }
+    },
+    "10": {
+      "explained_var": 0.6150520443916321,
+      "max_distance_corr": 0.28669774757486893,
+      "mode_mean_sobol": [
+        0.0065,
+        0.0009,
+        0.0027,
+        0.0346,
+        0.0005,
+        0.0086,
+        0.0018,
+        0.0036,
+        0.0006,
+        0.0001
+      ],
+      "mode_rank": [
+        4,
+        6,
+        1,
+        8,
+        3,
+        7,
+        2,
+        9,
+        5,
+        10
+      ],
+      "per_step_top_mode": {
+        "catalyst": 1,
+        "base": 1,
+        "aryl_halide": 6,
+        "additive": 4
+      }
+    }
+  },
+  "calibration": {
+    "mean_crps": 0.01716727070577596,
+    "pit_ks_to_uniform": 0.1001275573345922,
+    "pit_mean": 0.5227707296352114,
+    "pit_std": 0.2660516784451154,
+    "coverage": {
+      "50": 0.6110638297872341,
+      "80": 0.8274468085106383,
+      "90": 0.8868085106382979,
+      "95": 0.922978723404255
+    }
+  }
+}

@@ -1,0 +1,11 @@
+torch>=2.0
+numpy>=1.24
+scipy>=1.10
+scikit-learn>=1.2
+matplotlib>=3.7
+networkx>=3.0
+pandas>=1.5
+# Optional: GPT-2 backbone for LLM GFlowNet experiment
+transformers>=4.30
+# Optional: alternative PCE basis generation (core pipeline uses scipy Hermite)
+chaospy>=4.3

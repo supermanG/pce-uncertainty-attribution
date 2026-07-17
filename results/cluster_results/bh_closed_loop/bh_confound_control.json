@@ -1,0 +1,48 @@
+{
+  "N": 4599,
+  "M": 18,
+  "seeds": 3,
+  "frac": 0.3,
+  "sigma_shared": 2.913747549057007,
+  "margin": 10.0,
+  "fragility_mean": {
+    "catalyst": 0.05041529664149098,
+    "base": 0.008577760859186647,
+    "aryl_halide": 0.09281405266329947,
+    "additive": 0.15062064766676264
+  },
+  "fragility_std": {
+    "catalyst": 0.008240135613460531,
+    "base": 0.0017561747991182825,
+    "aryl_halide": 0.004151886522956431,
+    "additive": 0.011742125678387302
+  },
+  "rm_uncertainty": {
+    "catalyst": 3.045126040776571,
+    "base": 3.132688522338867,
+    "aryl_halide": 2.9296833674112954,
+    "additive": 2.547492265701294
+  },
+  "contestedness": {
+    "catalyst": 3,
+    "base": 1,
+    "aryl_halide": 4,
+    "additive": 10
+  },
+  "null_fragility": {
+    "catalyst": 0.1764846838678383,
+    "base": 0.0438162122426567,
+    "aryl_halide": 0.24072909159818068,
+    "additive": 0.2559571191831958
+  },
+  "K": {
+    "catalyst": 4,
+    "base": 3,
+    "aryl_halide": 16,
+    "additive": 24
+  },
+  "corr_frag_K": 0.9665753291227577,
+  "corr_frag_unc": -0.9621179768536575,
+  "corr_frag_contested": 0.9591317207812762,
+  "corr_frag_null": 0.9070771061845703
+}

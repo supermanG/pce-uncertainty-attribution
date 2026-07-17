@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Results (generated, can be large)
+results/
+
+# Data (downloaded separately)
+data/*.csv
+data/*.h5
+data/*.hdf5
+data/*.pkl
+experiments/buchwald_hartwig/data/*.csv
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Lean build
+lean/build/
+lean/.lake/
+RESUME.md
+NMI-strategy.md
+CLAUDE.md
+.claude/

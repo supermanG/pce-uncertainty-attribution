@@ -1,0 +1,101 @@
+{
+  "N": 4599,
+  "M": 25,
+  "frac": 0.3,
+  "epochs": 200,
+  "tau": 4.0,
+  "reference": [
+    1,
+    2,
+    11,
+    4
+  ],
+  "fragility": {
+    "catalyst": 0.04913587102584635,
+    "base": 0.007437954631055448,
+    "aryl_halide": 0.0953251728994264,
+    "additive": 0.13886847655097206
+  },
+  "rm_uncertainty": {
+    "catalyst": 2.659345865249634,
+    "base": 2.6172335147857666,
+    "aryl_halide": 2.589662790298462,
+    "additive": 2.420684576034546
+  },
+  "fragility_ranking": [
+    "additive",
+    "aryl_halide",
+    "catalyst",
+    "base"
+  ],
+  "uncertainty_ranking": [
+    "catalyst",
+    "base",
+    "aryl_halide",
+    "additive"
+  ],
+  "heldout_rmse": 13.159752856753617,
+  "manuscript_order": [
+    "additive",
+    "aryl_halide",
+    "catalyst",
+    "base"
+  ],
+  "ranking_matches_manuscript": true,
+  "uncertainty_matches_manuscript": false,
+  "learning_curve": {
+    "0.02": {
+      "catalyst": 0.2762757705971289,
+      "base": 0.08659164983762335,
+      "aryl_halide": 0.366070090829321,
+      "additive": 0.49105753532026014
+    },
+    "0.05": {
+      "catalyst": 0.17886834237644023,
+      "base": 0.0319781731441425,
+      "aryl_halide": 0.28201109693695464,
+      "additive": 0.41046323059612955
+    },
+    "0.1": {
+      "catalyst": 0.10672027035900172,
+      "base": 0.018322849139876373,
+      "aryl_halide": 0.1696165537784746,
+      "additive": 0.2925606932159207
+    },
+    "0.2": {
+      "catalyst": 0.06024580277387381,
+      "base": 0.009887754440351218,
+      "aryl_halide": 0.08950865474843571,
+      "additive": 0.21014289450760193
+    },
+    "0.4": {
+      "catalyst": 0.04573969609255102,
+      "base": 0.006017543034962931,
+      "aryl_halide": 0.0842500922307665,
+      "additive": 0.11798576470957885
+    }
+  },
+  "voi": {
+    "additive": {
+      "total_frag_reduction": 0.012030781792431689,
+      "total_frag_reduction_std": 0.008731787751364095,
+      "target_frag_reduction": 0.0052218352494903635,
+      "rmse_reduction": 0.6210717185636367
+    },
+    "base": {
+      "total_frag_reduction": 0.013108078743092142,
+      "total_frag_reduction_std": 0.00785358601541915,
+      "target_frag_reduction": 0.0008708366976335446,
+      "rmse_reduction": 0.601657810908419
+    },
+    "random": {
+      "total_frag_reduction": 0.011740008368616661,
+      "total_frag_reduction_std": 0.008447298644405334,
+      "target_frag_reduction": 0.0029350020921541653,
+      "rmse_reduction": 0.580430825700883
+    }
+  },
+  "seed_frac": 0.08,
+  "budget_frac": 0.06,
+  "voi_reps": 4
+}

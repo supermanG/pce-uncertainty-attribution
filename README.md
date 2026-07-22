@@ -10,9 +10,29 @@ Manson-Sawko, R., Horesh, L., Bengio, Y. (2026)
 
 ## Overview
 
-This repository provides the full implementation of a surrogate modelling framework that propagates reward uncertainty through GFlowNet policies and decomposes it into interpretable components via analytical Sobol sensitivity indices.
+This repository provides the implementation and the reproduction material for the paper.
+The framework parameterises a learned objective model's epistemic uncertainty in a
+low-dimensional basis (PCA modes of an ensemble, or the Karhunen-Loeve modes of a Gaussian
+process posterior), trains a small ensemble of decision policies under that uncertainty, fits
+a sparse or arbitrary polynomial chaos expansion (PCE) per decision, and reads off
+closed-form Sobol indices, a scale-invariant decision fragility, and an applicability
+diagnostic.
 
-**Key idea:** train a small ensemble of GFlowNets under varied reward conditions, fit a polynomial chaos expansion (PCE) over the low-dimensional reward-parameter space, and read off closed-form Sobol indices — revealing *which components of reward uncertainty drive which generative decisions* — at a fraction of the cost of exhaustive retraining.
+**Key idea:** the decision-relevant part of a learned model's uncertainty is a distinct,
+separately computable object from its largest part. The value-of-information spectrum (the
+Sobol decomposition of the decision *value*) can be aligned with the variance spectrum, as in
+chemistry, or opposed to it, as under RLHF alignment, where the highest-variance
+reward-model direction is the shift-invariant one the softmax ignores exactly (Theorem 6).
+
+**Scope, and what is a negative control.** The positive demonstrations are
+Buchwald-Hartwig cross-coupling (real Doyle-Dreher yields), Bayesian optimization and
+optimal experimental design on the same real reaction space, and a best-of-n RLHF study on
+real human preferences (hh-rlhf). The **Sachs causal-discovery and fragment-based
+molecular-design settings are negative controls**: the training-noise diagnostic shows their
+policy ensembles are dominated by training-seed noise rather than reward uncertainty, and the
+surrogate cannot predict the policy from the reward parameterisation, so no reward-uncertainty
+attribution is reported for them. Their code is retained here because the abstention is a
+reported result, not because a quantitative claim is made from them.
 
 ---
 
@@ -23,7 +43,9 @@ core/
   pce_surrogate.py            TrajectoryPCESurrogate: per-step PCE fitting,
                               GCV ridge selection, bootstrap CIs, marginal
                               and joint calibration coverage, analytical
-                              Sobol indices, ensemble-size bound (Theorem A).
+                              Sobol indices, ensemble-size bound.
+  sparse_pce.py               Sparse PCE (LARS / OMP) and arbitrary PCE (aPC)
+                              on empirical marginals; design-matrix coherence.
   mlp_surrogate.py            MLP baseline surrogate.
   gp_surrogate.py             GP baseline surrogate.
   distributional_analysis.py  KS-test battery, bimodality detection,
@@ -33,13 +55,30 @@ core/
   fragility_metrics.py        Scale-invariant simplex fragility and corrected
                               interaction reporting (shared by the studies).
 
+decision_studies/             Decision-making studies under learned-model uncertainty.
+                              These produce the six main-text figures.
+  common/
+    analyze_ensemble.py       Task-agnostic post-analysis: sparse/aPC PCE,
+                              PCA-dimension sweep, validation metrics,
+                              bootstrap Sobol CIs, Source Data CSVs.
+  buchwald_hartwig/           Closed-loop fragility validation on measured
+                              yields, cardinality-confound control, ensemble-
+                              size convergence, Shapley effects, robustness.
+  bayesian_optimization/      BO / optimal experimental design on the real
+                              reaction space; exactly-valid KL-mode indices.
+  rlhf/                       RLHF reward-model uncertainty: best-of-n study
+                              on real human preferences (hh-rlhf).
+  value_of_information/       Value-of-information spectrum (decision-relevant
+                              vs total uncertainty) and VoI-guided acquisition.
+  controls/                   Training-noise controls (applicability diagnostic)
+                              for the molecular-design and Sachs negative controls.
+  embedding_check/            beta-VAE grid-world embedding-agnostic check.
+  reanalysis_sobol_scale.py   Scale-dependence re-analysis on cached outputs.
+
 experiments/
   buchwald_hartwig/           Pd-catalysed C-N coupling (Doyle-Dreher dataset);
-                              4-step GFlowNet, 50/100 ensemble, d=5 PCA.
-  sachs_causal/               Bayesian causal discovery on real Sachs flow
-                              cytometry (853 obs, 11 proteins); BGe reward.
-  molecular_design/           Fragment-based drug-likeness GFlowNet (20-frag
-                              vocab, 5 positions, MLP proxy reward).
+                              4-step GFlowNet, 150 members (50 train / 100 test),
+                              d=5 PCA, PCE degree 3.
   gridworld/                  Discrete and continuous grid-world validation
                               (ground-truth reachable).
   symreg/                     Symbolic regression GRU with Wiener-process
@@ -48,48 +87,45 @@ experiments/
                               process reward model (PRM).
   controlled_llm/             Strategy-selection reasoning GFlowNet
                               (10 strategies, 5 steps, uncertain PRM).
+  sachs_causal/               NEGATIVE CONTROL. Bayesian causal discovery on
+                              real Sachs flow cytometry; training-seed dominated,
+                              no attribution reported.
+  molecular_design/           NEGATIVE CONTROL. Fragment-based drug-likeness
+                              GFlowNet; training-seed dominated, no attribution
+                              reported.
   baselines/                  PCE vs MLP vs GP head-to-head comparison.
-  sobol_validation/           Sobol convergence and Theorem A sample-
-                              complexity validation.
-  validation/                 Negative controls, scaling benchmarks, PCA
-                              independence checks, BH additive validation.
+  sobol_validation/           Sobol convergence, sample-complexity validation,
+                              and the analytical-vs-Monte-Carlo cost comparison.
+  validation/                 Assumption-violation controls, scaling benchmarks,
+                              PCA independence checks, embedding ablation,
+                              BH additive validation, L=60 check.
 
 lean/
-  PCESurrogate.lean           Lean 4 formal verification: all five theorems
-                              (T1-T5) machine-checked, no `sorry`.
+  PCESurrogate.lean           Lean 4 formal verification: eight lemmas covering
+                              the seven numbered results T1-T7, all `sorry`-free.
   lakefile.lean               Lake project descriptor.
-  lake-manifest.json          Pinned Mathlib4 dependency manifest.
+  lake-manifest.json          Dependency manifest.
   lean-toolchain              Pinned Lean toolchain version.
 
-decision_studies/               Decision-making studies under learned-model uncertainty.
-  common/
-    analyze_ensemble.py       Task-agnostic post-analysis: sparse/aPC PCE,
-                              PCA-dimension sweep, validation metrics,
-                              bootstrap Sobol CIs, Source Data CSVs.
-  bayesian_optimization/      BO / optimal experimental design on the real
-                              reaction space; exactly-valid KL-mode indices.
-  rlhf/                       RLHF reward-model uncertainty: best-of-n study
-                              on real human preferences (hh-rlhf).
-  value_of_information/       Value-of-information spectrum (decision-relevant
-                              vs total uncertainty) and VoI-guided acquisition.
-  buchwald_hartwig/           Closed-loop fragility validation on measured
-                              yields, cardinality-confound control, ensemble-
-                              size convergence, Shapley effects.
-  controls/                   Training-noise controls (applicability diagnostic).
-  embedding_check/            beta-VAE grid-world embedding-agnostic check.
-  reanalysis_sobol_scale.py   Scale-dependence re-analysis on cached outputs.
-
 figures/
-  generate_figures.py         Regenerates all publication figures from results.
-  make_figures.py             Builds the manuscript composite figures.
+  make_figures.py             Builds the six main-text figures from the
+                              committed result JSONs in results/.
+  generate_figures.py         Builds the supplementary figure set (S1-S8) from
+                              the per-experiment results/ directories.
   make_graphical_abstract.py  Builds the graphical abstract.
-  *.pdf, *.png                Source files for every main and supplementary figure.
+  *.pdf, *.png                fig_framework, fig_bh_revised, fig_bh_closedloop,
+                              fig_bo_oed, fig_rlhf, fig_voi are main-text
+                              Figs 1-6; fig_s1 ... fig_s8 are the supplementary
+                              figures. The remaining PDFs are superseded drafts
+                              from earlier versions of the study and are not
+                              cited by the manuscript.
 
 results/                      Committed result JSONs (cluster_results/, outputs/)
-                              backing every figure and table.
+                              backing the main-text figures.
 
 data/
   download_sachs.py           Downloads real Sachs flow cytometry data.
+  sachs_real.csv              Cached copy of that dataset.
 
 tests/
   test_sparse_pce.py          Sparse / arbitrary-PCE recovery and Sobol checks.
@@ -98,7 +134,7 @@ notebooks/
   demo_uq_pipeline.ipynb      End-to-end walkthrough on a toy example.
 
 lsf/                          IBM CCC cluster submission scripts (LSF/bsub)
-                              for every experiment plus the BH array job.
+                              for the experiment ensembles.
 
 scripts/
   run_local.py                Local-machine sequential runner.
@@ -118,20 +154,25 @@ git clone https://github.com/supermanG/uq-gflownet-release
 cd uq-gflownet-release
 pip install -r requirements.txt
 
-# Smoke test (reduced ensemble, fast)
+# Rebuild the six main-text figures from the committed result JSONs (seconds, CPU)
+python figures/make_figures.py
+
+# Smoke test of the GFlowNet training pipeline (reduced ensembles, fast)
 python run_all.py --quick
 
-# Individual experiments
-python run_all.py --experiment bh        # Buchwald-Hartwig (~30 min, CPU)
-python run_all.py --experiment sachs     # Sachs causal discovery (~20 min, CPU)
-python run_all.py --experiment moldesign # Fragment molecular design (~15 min, CPU)
-python run_all.py --experiment llm       # LLM GFlowNet (~15 min, CPU)
-
-# Reproduce all figures from cached results
-python figures/generate_figures.py
+# Individual training pipelines accepted by run_all.py
+python run_all.py --experiment bh     # Buchwald-Hartwig (~30 min, CPU)
+python run_all.py --experiment sachs  # Sachs (negative control, ~20 min, CPU)
+python run_all.py --experiment llm    # Controlled LLM GFlowNet (~15 min, CPU)
 ```
 
-See [`REPRODUCE.md`](REPRODUCE.md) for the full per-figure / per-table reproduction recipe.
+The molecular-design negative control is not exposed through `run_all.py`; run it directly:
+
+```bash
+python experiments/molecular_design/run_experiment.py --mode sequential
+```
+
+See [`REPRODUCE.md`](REPRODUCE.md) for the full per-figure reproduction recipe.
 
 ---
 
@@ -146,15 +187,17 @@ scikit-learn >= 1.2
 matplotlib >= 3.7
 pandas >= 1.5            # Doyle-Dreher CSV loader
 networkx >= 3.0          # Sachs DAG figure
-transformers >= 4.30     # GRU/GPT-2 stacks for the LLM GFlowNet (optional)
+transformers >= 4.30     # DistilBERT / GPT-2 stacks for the RLHF study (optional)
+datasets                 # hh-rlhf preference data for the RLHF study (optional)
 ```
 
-Install all:
+Install:
 ```bash
 pip install -r requirements.txt
 ```
 
-For the Lean 4 proofs: install [Lean 4](https://leanprover.github.io/) and run `lake build` inside `lean/`. The Mathlib4 dependency is pinned in `lake-manifest.json` (currently v4.30).
+Only `numpy` and `matplotlib` are needed to rebuild the main-text figures from the committed
+result JSONs.
 
 ---
 
@@ -162,51 +205,67 @@ For the Lean 4 proofs: install [Lean 4](https://leanprover.github.io/) and run `
 
 ### Real datasets
 
-The Doyle-Dreher Buchwald-Hartwig dataset is available at
-https://github.com/doylelab/rxnpredict
-(place `data_table.csv` at `experiments/buchwald_hartwig/data/`).
+The Doyle-Dreher Buchwald-Hartwig dataset is committed at
+`experiments/buchwald_hartwig/data/data_table.csv`; upstream source
+https://github.com/doylelab/rxnpredict.
 
 The Sachs flow cytometry dataset (853 observations, 11 proteins) is available at
-https://www.bnlearn.com/bnrepository/
-
-To download automatically:
+https://www.bnlearn.com/bnrepository/ and cached at `data/sachs_real.csv`. To re-download:
 ```bash
 python data/download_sachs.py
 ```
 
-### Cluster (IBM CCC / LSF)
-
-LSF submission scripts for every experiment are in `lsf/`. The BH experiment uses an array job for the 50-member ensemble:
-
-```bash
-bash lsf/submit_bh.sh           # Phase 1: array of single-member trainers
-bash lsf/bh_analyze.sh          # Phase 2: collect + PCE fit + Sobol
-```
+The RLHF study uses `Anthropic/hh-rlhf`
+(https://huggingface.co/datasets/Anthropic/hh-rlhf), downloaded at run time.
 
 ### Figures
 
-After experiments complete, regenerate all publication figures:
 ```bash
-python figures/generate_figures.py
+python figures/make_figures.py     # main-text Figs 1-6, from committed JSONs
+python figures/generate_figures.py # supplementary figure set, needs results/
 ```
+
 Vector PDFs are written to `figures/`.
+
+### Cluster (IBM CCC / LSF)
+
+LSF submission scripts for the training ensembles are in `lsf/`. The BH experiment submits
+one job per ensemble member and a dependent analysis job:
+
+```bash
+bash lsf/submit_bh.sh           # per-member trainers, then the analysis job
+```
 
 ---
 
 ## Formal verification
 
-All five theorems are machine-checked in Lean 4 with no `sorry`; each depends only on the standard axioms (`propext`, `Classical.choice`, `Quot.sound`):
+`lean/PCESurrogate.lean` machine-checks eight lemmas covering the seven numbered results
+T1-T7 of the manuscript. Every proof is `sorry`-free, `lake build` completes with no errors,
+and `#print axioms` reports that each theorem depends only on the three standard axioms
+`propext`, `Classical.choice`, `Quot.sound`. Results proved outright are distinguished from
+those proved conditional on a stated hypothesis, exactly as in Supplementary Table S1:
 
-| ID  | Statement                                  | Status   |
-|-----|--------------------------------------------|----------|
-| T1  | PCE truncation error converges to zero     | Verified |
-| T2  | Sobol index convergence from l^2 closeness | Verified |
-| T3a | Softmax strict positivity                  | Verified |
-| T3b | Softmax normalisation identity             | Verified |
-| T4  | Lipschitz uncertainty propagation          | Verified |
-| T5  | Softmax Lipschitz bound (constant 2)       | Verified |
+| ID  | Lean lemma                   | Statement                                       | Status      |
+|-----|------------------------------|-------------------------------------------------|-------------|
+| T1  | `pce_error_tendsto_zero`     | PCE truncation error converges to zero           | conditional (Sobolev rate assumed) |
+| T2  | `sobol_convergence_from_L2`  | Sobol index convergence from l^2 closeness       | conditional (shared basis, positive variance, first-order) |
+| T3a | `softmax_positive`           | Softmax strict positivity                        | outright    |
+| T3b | `softmax_sums_to_one`        | Softmax normalisation identity                   | outright    |
+| T4  | `uncertainty_propagation`    | Lipschitz uncertainty propagation                | conditional (Lipschitz constant given) |
+| T5  | `softmax_lipschitz`          | Softmax l-infinity to l-1 bound (constant 2)     | outright    |
+| T6  | `softmax_shift_invariant`    | Softmax invariance to a uniform logit shift      | outright    |
+| T7  | `value_diff_le_l1`           | Decision value-variability bounded by fragility  | outright    |
 
-Source: `lean/PCESurrogate.lean`. Build with `cd lean && lake build`; `#print axioms` confirms the axiom dependencies.
+An auxiliary lemma, `simplex_l1_le_two` (the l-1 diameter of the probability simplex is 2),
+supports the T5 proof.
+
+Build:
+```bash
+# lean/lean-toolchain pins the Lean version; the project requires a Mathlib4
+# checkout as a sibling of this repository (see the `require` line in lean/lakefile.lean)
+cd lean && lake build
+```
 
 ---
 

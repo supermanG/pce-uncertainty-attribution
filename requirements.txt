@@ -9,3 +9,5 @@ pandas>=1.5
 transformers>=4.30
 # Optional: alternative PCE basis generation (core pipeline uses scipy Hermite)
 chaospy>=4.3
+# Optional: hh-rlhf preference data for the RLHF decision study
+datasets>=2.14

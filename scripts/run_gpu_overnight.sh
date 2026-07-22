@@ -1,5 +1,5 @@
 #!/bin/bash
-# Overnight GPU runner — practical for single RTX 3000 Pro (12GB).
+# Overnight GPU runner: practical for single RTX 3000 Pro (12GB).
 # Reduced member counts + episodes for local validation.
 # Full-scale runs (150/80 members, 3000 episodes) reserved for CCC cluster.
 #

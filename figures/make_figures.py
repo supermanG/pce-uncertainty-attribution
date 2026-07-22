@@ -1,4 +1,4 @@
-"""Generate the four manuscript figures from the committed result JSONs.
+"""Generate the six main-text manuscript figures from the committed result JSONs.
 Colourblind-safe (Okabe-Ito) palette, clean publication styling. Outputs PDFs to figures/.
 """
 import json, os, sys

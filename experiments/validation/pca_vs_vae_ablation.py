@@ -3,10 +3,10 @@
 
 Compares four dimensionality reduction / Gaussianization strategies for
 the PCE surrogate on the Buchwald-Hartwig task:
-  1. Linear PCA (baseline) — orthogonal, Gaussian-compatible, analytical Sobol
-  2. Kernel PCA (RBF) — nonlinear, uncorrelated by construction, Sobol if Gaussian
-  3. β-VAE — nonlinear, approximately independent at high β, Sobol approximate
-  4. PCA + Normalizing Flow (RealNVP) — PCA for dimensionality reduction, then
+  1. Linear PCA (baseline): orthogonal, Gaussian-compatible, analytical Sobol
+  2. Kernel PCA (RBF): nonlinear, uncorrelated by construction, Sobol if Gaussian
+  3. β-VAE: nonlinear, approximately independent at high β, Sobol approximate
+  4. PCA + Normalizing Flow (RealNVP): PCA for dimensionality reduction, then
      learned invertible map to exact N(0, I). Hermite basis is optimal, analytical
      Sobol is exactly valid by construction.
 
@@ -450,7 +450,7 @@ def run_ablation(
     print(f"  Max |ρ|: {kpca_indep['max_abs_pearson']:.4f} ({'PASS' if kpca_indep['independent'] else 'FAIL'})")
     print(f"  Gaussian: {kpca_gauss['all_gaussian']}")
 
-    # Fit PCE — use Hermite if Gaussian, note if not
+    # Fit PCE: use Hermite if Gaussian, note if not
     basis_kpca = "hermite" if kpca_gauss["all_gaussian"] else "hermite"
     tsurr_kpca = TrajectoryPCESurrogate(degree=pce_degree, basis=basis_kpca)
     for s in range(4):
@@ -607,13 +607,13 @@ def run_ablation(
         ("PCA+Flow", nf_indep, nf_gauss),
     ]:
         if indep_result["independent"] and gauss_result["all_gaussian"]:
-            verdict = "FULLY VALID — independent + Gaussian → analytical Sobol exact"
+            verdict = "FULLY VALID: independent + Gaussian → analytical Sobol exact"
         elif indep_result["independent"]:
-            verdict = "APPROXIMATELY VALID — independent but non-Gaussian → consider aPC basis"
+            verdict = "APPROXIMATELY VALID: independent but non-Gaussian → consider aPC basis"
         elif gauss_result["all_gaussian"]:
-            verdict = "CAUTION — Gaussian but correlated → Sobol decomposition leaks across dims"
+            verdict = "CAUTION: Gaussian but correlated → Sobol decomposition leaks across dims"
         else:
-            verdict = "INVALID — correlated + non-Gaussian → use MC Sobol only"
+            verdict = "INVALID: correlated + non-Gaussian → use MC Sobol only"
         print(f"  {name:15s}: {verdict}")
 
     # Save results

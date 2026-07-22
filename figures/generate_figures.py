@@ -1,20 +1,28 @@
 """
 generate_figures.py
 -------------------
-Nature Communications quality figure generation for:
-  "Interpretable epistemic uncertainty decomposition in sequential
-   generative models via polynomial chaos surrogates"
+Supplementary figure set (S1-S8) for:
+  "Interpretable epistemic uncertainty attribution for decision-making under
+   learned-model uncertainty"
 
-All figures use SYNTHETIC / PLACEHOLDER data clearly labelled in titles
-and are ready to swap for real results.
+The six main-text figures are built by figures/make_figures.py from the committed
+result JSONs under results/cluster_results/. This script builds the supplementary
+figures from the per-experiment directories under results/ (gridworld, symreg,
+llm_gfn, controlled_llm, baselines), together with a number of earlier-version
+panels that the current manuscript does not cite.
+
+Panels whose results directory is absent fall back to placeholder data and say so
+on the console, so check the console output before using a regenerated panel. The
+S4 coverage values and the S7 ablation reference curves are embedded in this
+script rather than read from a results file.
 
 Run from the repository root:
-    python3 paper/figures/generate_figures.py
+    python figures/generate_figures.py
 
-Outputs (PDF, vector) are written to paper/figures/.
+Outputs (PDF, vector) are written to figures/.
 
 Requirements: matplotlib, numpy
-Optional:     networkx (Figure 3 Sachs DAG; graceful fallback if absent)
+Optional:     networkx (Sachs DAG panel; graceful fallback if absent)
 """
 
 import os
@@ -32,7 +40,7 @@ from matplotlib.lines import Line2D
 # Paths
 # ---------------------------------------------------------------------------
 HERE = os.path.dirname(os.path.abspath(__file__))
-OUT_DIR = HERE  # write PDFs alongside this script (paper/figures/)
+OUT_DIR = HERE  # write PDFs alongside this script (figures/)
 
 # ---------------------------------------------------------------------------
 # Nature-style global aesthetics
@@ -88,7 +96,7 @@ RNG = np.random.default_rng(42)
 
 
 # ===========================================================================
-# FIGURE 1b — Sobol sensitivity heatmap (BH, placeholder)
+# FIGURE 1b: Sobol sensitivity heatmap (BH, placeholder)
 # ===========================================================================
 
 def figure_1b_sobol_heatmap():
@@ -100,7 +108,7 @@ def figure_1b_sobol_heatmap():
     Colour = Sobol index magnitude; diverging blue-white-red centred at 0.5
     """
     row_labels = ["Catalyst", "Base", "Aryl halide", "Additive"]
-    # 5 PCs; show PC1–PC3 for compactness (PC4/5 near zero)
+    # 5 PCs; show PC1 to PC3 for compactness (PC4/5 near zero)
     col_labels = ["PC1", "PC2", "PC3", "PC4", "PC5"]
 
     # Real first-order Sobol indices (mean over ALR components)
@@ -114,7 +122,7 @@ def figure_1b_sobol_heatmap():
 
     fig, ax = plt.subplots(figsize=(SINGLE_COL_IN * 1.3, SINGLE_COL_IN * 0.9))
 
-    # Sequential colourmap: all values are low (0–0.1), use Blues
+    # Sequential colourmap: all values are low (0 to 0.1), use Blues
     cmap = plt.get_cmap("YlOrRd")
     norm = mcolors.Normalize(vmin=0.0, vmax=0.10)
 
@@ -140,7 +148,7 @@ def figure_1b_sobol_heatmap():
     cbar.ax.tick_params(labelsize=6)
 
     ax.text(-0.12, 1.06, 'b', transform=ax.transAxes, fontsize=9, fontweight='bold', va='top', ha='right')
-    ax.set_title("Sobol sensitivity (first-order) — BH reaction", fontsize=7, pad=2, loc='left')
+    ax.set_title("Sobol sensitivity (first-order): BH reaction", fontsize=7, pad=2, loc='left')
 
     path = os.path.join(OUT_DIR, "fig1b_sobol_heatmap_BH.pdf")
     fig.savefig(path)
@@ -149,7 +157,7 @@ def figure_1b_sobol_heatmap():
 
 
 # ===========================================================================
-# FIGURE 1c — Total policy variance bar chart (BH, real data)
+# FIGURE 1c: Total policy variance bar chart (BH, real data)
 # ===========================================================================
 
 def figure_1c_total_variance():
@@ -187,7 +195,7 @@ def figure_1c_total_variance():
 
 
 # ===========================================================================
-# FIGURE 2 — Policy distribution comparison (4 sub-panels)
+# FIGURE 2: Policy distribution comparison (4 sub-panels)
 # ===========================================================================
 
 def figure_2_policy_distributions():
@@ -270,7 +278,7 @@ def figure_2_policy_distributions():
 
 
 # ===========================================================================
-# FIGURE 3 — Sachs DAG with Sobol overlay
+# FIGURE 3: Sachs DAG with Sobol overlay
 # ===========================================================================
 
 def figure_3_sachs_dag():
@@ -386,7 +394,7 @@ def figure_3_sachs_dag():
     ax.legend(handles=legend_lines, loc="lower left", fontsize=5.5,
               frameon=True, framealpha=0.8)
 
-    ax.set_title("Sachs protein signalling — Sobol sensitivity overlay",
+    ax.set_title("Sachs protein signalling: Sobol sensitivity overlay",
                  fontsize=8, pad=4)
     ax.axis("off")
 
@@ -397,7 +405,7 @@ def figure_3_sachs_dag():
 
 
 # ===========================================================================
-# FIGURE 4 — Theorem A validation (convergence of Sobol estimator)
+# FIGURE 4: Theorem A validation (convergence of Sobol estimator)
 # ===========================================================================
 
 def figure_4_theorem_a():
@@ -412,7 +420,7 @@ def figure_4_theorem_a():
     """
     import json as _json
 
-    _REPO_ROOT = os.path.normpath(os.path.join(HERE, "..", ".."))
+    _REPO_ROOT = os.path.normpath(os.path.join(HERE, ".."))
     _VAL_PATH  = os.path.join(_REPO_ROOT, "results", "sobol_validation",
                               "validation_results.json")
     _SC_PATH   = os.path.join(_REPO_ROOT, "results", "sobol_validation",
@@ -553,15 +561,15 @@ def figure_4_theorem_a():
 
 
 # ===========================================================================
-# FIGURE 1a — Framework pipeline diagram
+# FIGURE 1a: Framework pipeline diagram
 # ===========================================================================
 
 def figure_1a_framework():
     """
-    Figure 1a: Hero figure — three panels.
-      a — Problem: GFlowNet trajectory with non-uniform uncertainty spike
-      b — Method:  PCE prism decomposes opaque policy variance into Sobol spectrum
-      c — Result:  BH total policy variance D by reaction step (catalyst robust, additive fragile)
+    Figure 1a: Hero figure: three panels.
+      a: Problem: GFlowNet trajectory with non-uniform uncertainty spike
+      b: Method:  PCE prism decomposes opaque policy variance into Sobol spectrum
+      c: Result:  BH total policy variance D by reaction step (catalyst robust, additive fragile)
     """
     import matplotlib.patches as mpatches
     from matplotlib.patches import Polygon, FancyBboxPatch
@@ -579,7 +587,7 @@ def figure_1a_framework():
         ax.set_xlim(0, 1); ax.set_ylim(0, 1); ax.axis("off")
 
     # ================================================================== #
-    # Panel a — Problem statement                                         #
+    # Panel a: Problem statement                                         #
     # ================================================================== #
     n_nodes     = 5
     node_xs     = [0.10 + i * 0.20 for i in range(n_nodes)]
@@ -631,7 +639,7 @@ def figure_1a_framework():
               fontsize=9, fontweight="bold", va="top")
 
     # ================================================================== #
-    # Panel b — PCE prism                                                 #
+    # Panel b: PCE prism                                                 #
     # ================================================================== #
     # Prism (right-pointing triangle)
     px_l, px_r = 0.355, 0.600
@@ -669,9 +677,9 @@ def figure_1a_framework():
     # Output rays (fan from prism apex)
     ray_specs = [
         # (y_end, color, linewidth, label, bold)
-        (py_mid + 0.30, C_PC1,      3.2, r"$S_1$ — PC1 (reward mean)",   True),
-        (py_mid + 0.02, C_PC2,      2.2, r"$S_2$ — PC2 (reward spread)", True),
-        (py_mid - 0.24, "#AAAAAA",  1.2, r"$S_3$ — residual",            False),
+        (py_mid + 0.30, C_PC1,      3.2, r"$S_1$: PC1 (reward mean)",   True),
+        (py_mid + 0.02, C_PC2,      2.2, r"$S_2$: PC2 (reward spread)", True),
+        (py_mid - 0.24, "#AAAAAA",  1.2, r"$S_3$: residual",            False),
     ]
     for y_end, col, lw, lbl, bold in ray_specs:
         ax_b.plot([px_r, 0.965], [py_mid, y_end],
@@ -705,7 +713,7 @@ def figure_1a_framework():
               fontsize=9, fontweight="bold", va="top")
 
     # ================================================================== #
-    # Panel c — BH flagship result                                        #
+    # Panel c: BH flagship result                                        #
     # ================================================================== #
     steps_c  = ["Catalyst", "Base", "Aryl\nhalide", "Additive"]
     D_vals_c = [71.3, 76.1, 103.2, 179.2]
@@ -755,7 +763,7 @@ def figure_1a_framework():
 
 
 # ===========================================================================
-# FIGURE 2 (multi-panel) — BH headline figure
+# FIGURE 2 (multi-panel): BH headline figure
 # ===========================================================================
 
 def figure_2_bh_multipanel():
@@ -771,7 +779,7 @@ def figure_2_bh_multipanel():
     fig.subplots_adjust(hspace=0.45, wspace=0.38)
 
     # ------------------------------------------------------------------
-    # ax[0,0]: Reaction scheme — sequential pipeline with arrow chain
+    # ax[0,0]: Reaction scheme: sequential pipeline with arrow chain
     # ------------------------------------------------------------------
     ax = axes[0, 0]
     ax.set_facecolor("white")
@@ -926,7 +934,7 @@ def figure_2_bh_multipanel():
 
 
 # ===========================================================================
-# FIGURE moldesign — Molecular design 5-position vulnerability
+# FIGURE moldesign: Molecular design 5-position vulnerability
 # ===========================================================================
 
 def figure_moldesign():
@@ -1012,7 +1020,7 @@ def figure_moldesign():
 
 
 # ===========================================================================
-# FIGURE S4 — Supplementary calibration figure
+# FIGURE S4: Supplementary calibration figure
 # ===========================================================================
 
 def figure_s4_calibration():
@@ -1084,7 +1092,7 @@ def figure_s4_calibration():
 
 
 # ===========================================================================
-# FIGURE S7 — Supplementary ablation figure
+# FIGURE S7: Supplementary ablation figure
 # ===========================================================================
 
 def figure_s7_ablation():
@@ -1176,19 +1184,19 @@ def figure_s7_ablation():
 
 
 # ===========================================================================
-# FIGURE 3 (MULTI-PANEL) — Sachs with real member data
+# FIGURE 3 (MULTI-PANEL): Sachs with real member data
 # ===========================================================================
 
 def figure_3_sachs_multipanel():
     """
     Full 4-panel Sachs figure with real 80-member ensemble data.
-      a  — DAG with Sobol-coloured edges (requires networkx)
-      b  — Total-order Sobol decomposition (PC1/PC2) per trajectory step
-      c  — Surrogate vs test-ensemble policy distributions at steps 3, 7, 11
+      a : DAG with Sobol-coloured edges (requires networkx)
+      b : Total-order Sobol decomposition (PC1/PC2) per trajectory step
+      c : Surrogate vs test-ensemble policy distributions at steps 3, 7, 11
     """
     import json, glob as _glob, sys as _sys
 
-    REPO_ROOT  = os.path.normpath(os.path.join(HERE, "..", ".."))
+    REPO_ROOT  = os.path.normpath(os.path.join(HERE, ".."))
     SACHS_DIR  = os.path.join(REPO_ROOT, "results", "sachs")
     results_path = os.path.join(SACHS_DIR, "results.json")
     if not os.path.exists(results_path):
@@ -1279,7 +1287,7 @@ def figure_3_sachs_multipanel():
             tsurr_.fit_step(s, mu_tr, tr_pol_[s])
 
         raw_surr = tsurr_.sample_trajectory_policies(n_samples=3000)
-        # raw_surr[step] has shape (3000, 111) — probabilities
+        # raw_surr[step] has shape (3000, 111): probabilities
         surr_samples = raw_surr
     else:
         # Synthetic fallback so function still produces a figure
@@ -1401,14 +1409,14 @@ def figure_3_sachs_multipanel():
                       borderpad=0.4, bbox_to_anchor=(0.0, -0.07))
 
         ax_dag.text(-0.12, 1.06, 'a', transform=ax_dag.transAxes, fontsize=9, fontweight='bold', va='top', ha='right')
-        ax_dag.set_title("Sachs DAG — Sobol overlay", fontsize=7, pad=2, loc='left')
+        ax_dag.set_title("Sachs DAG: Sobol overlay", fontsize=7, pad=2, loc='left')
         ax_dag.axis("off")
 
     # ---- Panel b: stacked bar (PC1/PC2 Sobol per step) --------------- #
     x = np.arange(n_steps)
-    _sachs_bars1 = ax_sobol.bar(x, step_S_PC1, width=0.65, color=C_PC1, edgecolor='none', alpha=0.85, label="PC1 — hub connectivity")
+    _sachs_bars1 = ax_sobol.bar(x, step_S_PC1, width=0.65, color=C_PC1, edgecolor='none', alpha=0.85, label="PC1: hub connectivity")
     _sachs_bars2 = ax_sobol.bar(x, step_S_PC2, width=0.65, bottom=step_S_PC1,
-                 color=C_PC2, edgecolor='none', alpha=0.85, label="PC2 — MAPK cascade")
+                 color=C_PC2, edgecolor='none', alpha=0.85, label="PC2: MAPK cascade")
     _ylim_sachs = float((step_S_PC1 + step_S_PC2).max()) * 1.30
     for _b1sc, _b2sc in zip(_sachs_bars1, _sachs_bars2):
         _tot_sc = _b1sc.get_height() + _b2sc.get_height()
@@ -1425,7 +1433,7 @@ def figure_3_sachs_multipanel():
     ax_sobol.set_ylim(0, _ylim_sachs)
     ax_sobol.legend(fontsize=6, loc="upper right", ncol=2)
     ax_sobol.text(-0.04, 1.06, 'b', transform=ax_sobol.transAxes, fontsize=9, fontweight='bold', va='top', ha='left')
-    ax_sobol.set_title("Sobol decomposition — max-variance action per step",
+    ax_sobol.set_title("Sobol decomposition: max-variance action per step",
                        fontsize=7, pad=2, loc='left')
     for xi, lbl in enumerate(step_labels):
         ax_sobol.text(xi, -0.15, lbl, ha="center", va="top", fontsize=4.5,
@@ -1478,20 +1486,20 @@ def figure_3_sachs_multipanel():
 
 # ===========================================================================
 # ===========================================================================
-# FIGURE — Grid-world multi-panel
+# FIGURE: Grid-world multi-panel
 # ===========================================================================
 
 def figure_gridworld_multipanel():
     """
     3-panel grid-world figure (discrete mode).
-      a — 5x5 grid with 4 zones, sample trajectory overlay
-      b — Stacked total-order Sobol bars (PC1/PC2) per step
-      c — Surrogate vs test-ensemble action distributions at steps 1, 3, 5
+      a: 5x5 grid with 4 zones, sample trajectory overlay
+      b: Stacked total-order Sobol bars (PC1/PC2) per step
+      c: Surrogate vs test-ensemble action distributions at steps 1, 3, 5
     Falls back to synthetic data if results not yet available.
     """
     import json, glob as _glob, sys as _sys
 
-    REPO_ROOT   = os.path.normpath(os.path.join(HERE, "..", ".."))
+    REPO_ROOT   = os.path.normpath(os.path.join(HERE, ".."))
     GW_DIR      = os.path.join(REPO_ROOT, "results", "gridworld", "discrete")
     results_path = os.path.join(GW_DIR, "results.json")
 
@@ -1518,7 +1526,7 @@ def figure_gridworld_multipanel():
             step_S_PC1.append(float(tot_a[mi, 0]))
             step_S_PC2.append(float(tot_a[mi, 1]))
     else:
-        print("  (gridworld results not found — using synthetic placeholder data)")
+        print("  (gridworld results not found: using synthetic placeholder data)")
         n_train, n_test, pce_deg = 50, 100, 5
         rng_s = np.random.RandomState(3)
         # Realistic pattern: variance grows, PC1 dominant early then PC2 grows
@@ -1707,20 +1715,20 @@ def figure_gridworld_multipanel():
 
 
 # ===========================================================================
-# FIGURE — Symbolic regression multi-panel
+# FIGURE: Symbolic regression multi-panel
 # ===========================================================================
 
 def figure_symreg_multipanel():
     """
     3-panel symbolic regression figure.
-      a — Target function f(x) = sin(x)+2-x with KL noise bands
-      b — Stacked total-order Sobol bars (KL1/KL2) per token step
-      c — Surrogate vs test-ensemble token probability distributions at steps 0, 4, 8
+      a: Target function f(x) = sin(x)+2-x with KL noise bands
+      b: Stacked total-order Sobol bars (KL1/KL2) per token step
+      c: Surrogate vs test-ensemble token probability distributions at steps 0, 4, 8
     Falls back to synthetic data if results not yet available.
     """
     import json, glob as _glob, sys as _sys
 
-    REPO_ROOT    = os.path.normpath(os.path.join(HERE, "..", ".."))
+    REPO_ROOT    = os.path.normpath(os.path.join(HERE, ".."))
     SR_DIR       = os.path.join(REPO_ROOT, "results", "symreg")
     results_path = os.path.join(SR_DIR, "results.json")
 
@@ -1747,7 +1755,7 @@ def figure_symreg_multipanel():
             step_S_KL1.append(float(tot_a[mi, 0]))
             step_S_KL2.append(float(tot_a[mi, 1]))
     else:
-        print("  (symreg results not found — using synthetic placeholder data)")
+        print("  (symreg results not found: using synthetic placeholder data)")
         n_train, n_test, pce_deg = 100, 50, 5
         tok_labels = TOKENS
         # KL1 dominates early (low-freq noise), KL2 grows at later steps
@@ -1902,19 +1910,19 @@ def figure_symreg_multipanel():
 
 
 # ===========================================================================
-# FIGURE — LLM GFlowNet multi-panel
+# FIGURE: LLM GFlowNet multi-panel
 # ===========================================================================
 
 def figure_llm_multipanel():
     """
     3-panel LLM GFlowNet figure.
-      a — PRM uncertainty: per-member PRM output variance across arithmetic problems
-      b — Stacked total-order Sobol bars (PC1/PC2) per token step
-      c — Surrogate vs test-ensemble token distributions at steps 1, 3, 5
+      a: PRM uncertainty: per-member PRM output variance across arithmetic problems
+      b: Stacked total-order Sobol bars (PC1/PC2) per token step
+      c: Surrogate vs test-ensemble token distributions at steps 1, 3, 5
     """
     import json, glob as _glob, sys as _sys
 
-    REPO_ROOT    = os.path.normpath(os.path.join(HERE, "..", ".."))
+    REPO_ROOT    = os.path.normpath(os.path.join(HERE, ".."))
     LLM_DIR      = os.path.join(REPO_ROOT, "results", "llm_gfn")
     results_path = os.path.join(LLM_DIR, "results.json")
 
@@ -1939,7 +1947,7 @@ def figure_llm_multipanel():
             step_S_PC1.append(float(tot_a[mi, 0]))
             step_S_PC2.append(float(tot_a[mi, 1]))
     else:
-        print("  (llm_gfn results not found — using synthetic placeholder data)")
+        print("  (llm_gfn results not found: using synthetic placeholder data)")
         n_train, n_test, pce_deg = 30, 50, 5
         N_STEPS, K = 5, 16
         steps = list(range(N_STEPS))
@@ -2077,7 +2085,7 @@ def figure_llm_multipanel():
 
 
 # ===========================================================================
-# SUPPLEMENTARY FIGURE S5 — PCE vs MLP comparison
+# SUPPLEMENTARY FIGURE S5: PCE vs MLP comparison
 # ===========================================================================
 
 def figure_s5_pce_vs_mlp():
@@ -2088,7 +2096,7 @@ def figure_s5_pce_vs_mlp():
     """
     import json as _json
 
-    _REPO_ROOT = os.path.normpath(os.path.join(HERE, "..", ".."))
+    _REPO_ROOT = os.path.normpath(os.path.join(HERE, ".."))
     _CMP_PATH  = os.path.join(_REPO_ROOT, "results", "baselines", "comparison.json")
 
     _use_real = False
@@ -2186,7 +2194,7 @@ def figure_s5_pce_vs_mlp():
 
 
 # ===========================================================================
-# SUPPLEMENTARY FIGURE S6 — PCE vs GP comparison
+# SUPPLEMENTARY FIGURE S6: PCE vs GP comparison
 # ===========================================================================
 
 def figure_s6_pce_vs_gp():
@@ -2197,7 +2205,7 @@ def figure_s6_pce_vs_gp():
     """
     import json as _json
 
-    _REPO_ROOT = os.path.normpath(os.path.join(HERE, "..", ".."))
+    _REPO_ROOT = os.path.normpath(os.path.join(HERE, ".."))
     _CMP_PATH  = os.path.join(_REPO_ROOT, "results", "baselines", "comparison.json")
 
     _use_real  = False
@@ -2306,7 +2314,7 @@ def figure_s6_pce_vs_gp():
 
 
 # ===========================================================================
-# SUPPLEMENTARY FIGURE S1 — Discrete grid-world (all steps)
+# SUPPLEMENTARY FIGURE S1: Discrete grid-world (all steps)
 # ===========================================================================
 
 def figure_s1_discrete_grid():
@@ -2316,7 +2324,7 @@ def figure_s1_discrete_grid():
     Row 2: first-order Sobol indices per step x action.
     """
     import glob as _glob, json as _json
-    REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     DISC_DIR  = os.path.join(REPO_ROOT, "results", "gridworld", "discrete")
 
     N_STEPS  = 5
@@ -2349,6 +2357,8 @@ def figure_s1_discrete_grid():
             te_pols[si] = arr.mean(axis=0)
             te_stds[si] = arr.std(axis=0)
     else:
+        print("  (discrete grid-world members not found: "
+              "using synthetic placeholder data)")
         rng_ = np.random.RandomState(99)
         for si in range(N_STEPS):
             te_pols[si] = rng_.dirichlet(np.ones(N_ACTS) * 3.0)
@@ -2419,7 +2429,7 @@ def figure_s1_discrete_grid():
 
 
 # ===========================================================================
-# SUPPLEMENTARY FIGURE S2 — Continuous grid-world (all steps)
+# SUPPLEMENTARY FIGURE S2: Continuous grid-world (all steps)
 # ===========================================================================
 
 def figure_s2_continuous_grid():
@@ -2429,7 +2439,7 @@ def figure_s2_continuous_grid():
     Row 2: first-order Sobol indices per step x action.
     """
     import glob as _glob, json as _json
-    REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     CONT_DIR  = os.path.join(REPO_ROOT, "results", "gridworld", "continuous")
 
     has_results  = os.path.isfile(os.path.join(CONT_DIR, "results.json"))
@@ -2463,6 +2473,8 @@ def figure_s2_continuous_grid():
                 te_stds[si] = arr.std(axis=0)
 
     if te_pols[0] is None:
+        print("  (continuous grid-world members not found: "
+              "using synthetic placeholder data)")
         rng_ = np.random.RandomState(101)
         N_ACTS = 20
         for si in range(N_STEPS):
@@ -2530,7 +2542,7 @@ def figure_s2_continuous_grid():
 
 
 # ===========================================================================
-# SUPPLEMENTARY FIGURE S3 — Sobol sensitivity across all tasks
+# SUPPLEMENTARY FIGURE S3: Sobol sensitivity across all tasks
 # ===========================================================================
 
 def figure_s3_sobol_all():
@@ -2539,7 +2551,7 @@ def figure_s3_sobol_all():
     Two-panel grouped bar chart: PC1 (left) and PC2 (right).
     """
     import glob as _glob, json as _json
-    REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
     experiments = [
         ("Discrete GW",   "gridworld/discrete",   5, "#1F77B4"),
@@ -2563,6 +2575,8 @@ def figure_s3_sobol_all():
                         pc1_vals.append(float(entry[0]))
                         pc2_vals.append(float(entry[1]))
         if not pc1_vals:
+            print(f"  ({exp_name} results not found at {res_path}: "
+                  f"using synthetic placeholder data)")
             rng_ = np.random.RandomState(abs(hash(exp_name)) % 2**31)
             pc1_vals = rng_.uniform(0.2, 0.8, n_steps_exp * 3).tolist()
             pc2_vals = rng_.uniform(0.1, 0.6, n_steps_exp * 3).tolist()
@@ -2601,7 +2615,7 @@ def figure_s3_sobol_all():
 
 
 # ===========================================================================
-# SUPPLEMENTARY FIGURE S8 — Controlled LLM (strategy-selection GFlowNet)
+# SUPPLEMENTARY FIGURE S8: Controlled LLM (strategy-selection GFlowNet)
 # ===========================================================================
 
 def figure_s8_controlled_llm():
@@ -2611,7 +2625,7 @@ def figure_s8_controlled_llm():
     Two panels: (a) first-order Sobol per step, (b) total-order Sobol per step.
     """
     import json as _json
-    REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     RES_PATH  = os.path.join(REPO_ROOT, "results", "controlled_llm", "results.json")
 
     N_STEPS = 5
@@ -2641,6 +2655,8 @@ def figure_s8_controlled_llm():
                     st_pc2[si] = float(np.mean([v[1] for v in vals_to]))
         has_real = True
     else:
+        print(f"  (controlled-LLM results not found at {RES_PATH}: "
+              f"using synthetic placeholder data)")
         rng_ = np.random.RandomState(55)
         s1_pc1 = rng_.uniform(0.1, 0.6, N_STEPS)
         s1_pc2 = rng_.uniform(0.05, 0.4, N_STEPS)
@@ -2690,64 +2706,64 @@ def main():
     print(f"Generating figures to: {OUT_DIR}")
     print()
 
-    print("Figure 1b — Sobol heatmap (BH, real data) ...")
+    print("Figure 1b: Sobol heatmap (BH, real data) ...")
     figure_1b_sobol_heatmap()
 
-    print("Figure 1c — Total policy variance bar chart (BH, real data) ...")
+    print("Figure 1c: Total policy variance bar chart (BH, real data) ...")
     figure_1c_total_variance()
 
-    print("Figure 2  — Policy distribution comparison ...")
+    print("Figure 2 : Policy distribution comparison ...")
     figure_2_policy_distributions()
 
-    print("Figure 3  — Sachs DAG with Sobol overlay ...")
+    print("Figure 3 : Sachs DAG with Sobol overlay ...")
     figure_3_sachs_dag()
 
-    print("Figure 3 (multi-panel) — Sachs real data ...")
+    print("Figure 3 (multi-panel): Sachs real data ...")
     figure_3_sachs_multipanel()
 
-    print("Figure 4  — Theorem A validation ...")
+    print("Figure 4 : Theorem A validation ...")
     figure_4_theorem_a()
 
-    print("Figure 1a — Framework pipeline ...")
+    print("Figure 1a: Framework pipeline ...")
     figure_1a_framework()
 
-    print("Figure 2 (multi-panel) — BH headline ...")
+    print("Figure 2 (multi-panel): BH headline ...")
     figure_2_bh_multipanel()
 
-    print("Figure moldesign — Molecular design vulnerability ...")
+    print("Figure moldesign: Molecular design vulnerability ...")
     figure_moldesign()
 
-    print("Figure S4 — Calibration coverage ...")
+    print("Figure S4: Calibration coverage ...")
     figure_s4_calibration()
 
-    print("Figure S7 — Ablation studies ...")
+    print("Figure S7: Ablation studies ...")
     figure_s7_ablation()
 
-    print("Figure S5 — PCE vs MLP ...")
+    print("Figure S5: PCE vs MLP ...")
     figure_s5_pce_vs_mlp()
 
-    print("Figure S6 — PCE vs GP ...")
+    print("Figure S6: PCE vs GP ...")
     figure_s6_pce_vs_gp()
 
-    print("Figure gridworld — Grid-world multi-panel ...")
+    print("Figure gridworld: Grid-world multi-panel ...")
     figure_gridworld_multipanel()
 
-    print("Figure symreg — Symbolic regression multi-panel ...")
+    print("Figure symreg: Symbolic regression multi-panel ...")
     figure_symreg_multipanel()
 
-    print("Figure LLM — LLM GFlowNet multi-panel ...")
+    print("Figure LLM: LLM GFlowNet multi-panel ...")
     figure_llm_multipanel()
 
-    print("Figure S1 — Discrete grid-world (all steps) ...")
+    print("Figure S1: Discrete grid-world (all steps) ...")
     figure_s1_discrete_grid()
 
-    print("Figure S2 — Continuous grid-world (all steps) ...")
+    print("Figure S2: Continuous grid-world (all steps) ...")
     figure_s2_continuous_grid()
 
-    print("Figure S3 — Sobol sensitivity across all tasks ...")
+    print("Figure S3: Sobol sensitivity across all tasks ...")
     figure_s3_sobol_all()
 
-    print("Figure S8 — Controlled LLM (strategy-selection GFlowNet) ...")
+    print("Figure S8: Controlled LLM (strategy-selection GFlowNet) ...")
     figure_s8_controlled_llm()
 
     print()

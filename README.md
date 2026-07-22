@@ -110,15 +110,21 @@ lean/
 figures/
   make_figures.py             Builds the six main-text figures from the
                               committed result JSONs in results/.
-  generate_figures.py         Builds the supplementary figure set (S1-S8) from
-                              the per-experiment results/ directories.
+  generate_figures.py         Builds the supplementary figure set (S1-S7) from
+                              the per-experiment results/ directories, plus
+                              earlier-version panels that the current manuscript
+                              does not use (flagged in the script and listed in
+                              REPRODUCE.md).
   make_graphical_abstract.py  Builds the graphical abstract.
   *.pdf, *.png                fig_framework, fig_bh_revised, fig_bh_closedloop,
                               fig_bo_oed, fig_rlhf, fig_voi are main-text
-                              Figs 1-6; fig_s1 ... fig_s8 are the supplementary
-                              figures. The remaining PDFs are superseded drafts
-                              from earlier versions of the study and are not
-                              cited by the manuscript.
+                              Figs 1-6. Supplementary Figs S1-S7 are fig_s1 to
+                              fig_s6 plus fig_s8_controlled_llm.pdf, whose file
+                              name is kept from an earlier numbering and which is
+                              Supplementary Fig S7 in the current manuscript. The
+                              remaining PDFs, fig_s7_ablation.pdf included, are
+                              superseded drafts from earlier versions of the study
+                              and are not cited by the manuscript.
 
 results/                      Committed result JSONs (cluster_results/, outputs/)
                               backing the main-text figures.
@@ -240,10 +246,42 @@ bash lsf/submit_bh.sh           # per-member trainers, then the analysis job
 
 ## Formal verification
 
+> **Prerequisite, please read before building.** `lean/lakefile.lean` requires Mathlib4 from a
+> **local path**, `../../mathlib4` relative to `lean/`, that is a directory named `mathlib4`
+> sitting **beside this repository**. A bare clone will therefore not build until that
+> checkout exists. Full setup, with expected timings, is in
+> [`REPRODUCE.md`](REPRODUCE.md#lean-4-formal-verification); the short version is:
+>
+> ```bash
+> # 1. Lean toolchain manager (once)
+> curl https://elan.lean-lang.org/elan-init.sh -sSf | sh
+>
+> # 2. Mathlib4 beside this repository, at the toolchain pinned in lean/lean-toolchain
+> cd ..                                       # parent of uq-gflownet-release
+> git clone https://github.com/leanprover-community/mathlib4.git
+> cd mathlib4
+> git checkout v4.30.0-rc1                    # must match lean/lean-toolchain
+> cat lean-toolchain                          # expect: leanprover/lean4:v4.30.0-rc1
+> lake exe cache get                          # prebuilt Mathlib artifacts
+>
+> # 3. Build the development, then audit its axioms
+> cd ../uq-gflownet-release/lean
+> lake build
+> lake env lean AxiomCheck.lean
+> ```
+>
+> If the tag above is absent or its `lean-toolchain` does not match, check out instead any
+> Mathlib commit whose `lean-toolchain` is exactly `leanprover/lean4:v4.30.0-rc1`. Step 2
+> dominates the wall-clock time: `lake exe cache get` downloads several GB of prebuilt
+> artifacts, and without that cache Lake compiles Mathlib from source, which takes hours.
+> Step 3 is a single file and is quick once Mathlib is in place.
+
 `lean/PCESurrogate.lean` machine-checks eight lemmas covering the seven numbered results
 T1-T7 of the manuscript. Every proof is `sorry`-free, `lake build` completes with no errors,
 and `#print axioms` reports that each theorem depends only on the three standard axioms
-`propext`, `Classical.choice`, `Quot.sound`. Results proved outright are distinguished from
+`propext`, `Classical.choice`, `Quot.sound`. `lean/AxiomCheck.lean` reruns that axiom audit
+for all eight lemmas in one command (`lake env lean AxiomCheck.lean`), so the claim is
+checkable without reading the proofs. Results proved outright are distinguished from
 those proved conditional on a stated hypothesis, exactly as in Supplementary Table S1:
 
 | ID  | Lean lemma                   | Statement                                       | Status      |
@@ -258,14 +296,7 @@ those proved conditional on a stated hypothesis, exactly as in Supplementary Tab
 | T7  | `value_diff_le_l1`           | Decision value-variability bounded by fragility  | outright    |
 
 An auxiliary lemma, `simplex_l1_le_two` (the l-1 diameter of the probability simplex is 2),
-supports the T5 proof.
-
-Build:
-```bash
-# lean/lean-toolchain pins the Lean version; the project requires a Mathlib4
-# checkout as a sibling of this repository (see the `require` line in lean/lakefile.lean)
-cd lean && lake build
-```
+supports the T5 proof and is audited alongside the eight.
 
 ---
 

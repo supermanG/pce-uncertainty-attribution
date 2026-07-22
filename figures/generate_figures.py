@@ -99,6 +99,7 @@ RNG = np.random.default_rng(42)
 # FIGURE 1b: Sobol sensitivity heatmap (BH, placeholder)
 # ===========================================================================
 
+# NOT IN THE CURRENT MANUSCRIPT: earlier-version panel, retained for provenance.
 def figure_1b_sobol_heatmap():
     """
     Figure 1b: First-order Sobol index heatmap for Buchwald-Hartwig GFlowNet.
@@ -160,6 +161,7 @@ def figure_1b_sobol_heatmap():
 # FIGURE 1c: Total policy variance bar chart (BH, real data)
 # ===========================================================================
 
+# NOT IN THE CURRENT MANUSCRIPT: earlier-version panel, retained for provenance.
 def figure_1c_total_variance():
     """Bar chart of total policy variance D per reaction component (real BH data)."""
     components  = ["Catalyst", "Base", "Aryl halide", "Additive"]
@@ -198,6 +200,7 @@ def figure_1c_total_variance():
 # FIGURE 2: Policy distribution comparison (4 sub-panels)
 # ===========================================================================
 
+# NOT IN THE CURRENT MANUSCRIPT: earlier-version panel, retained for provenance.
 def figure_2_policy_distributions():
     """
     Figure 2: Comparison of test ensemble vs PCE surrogate policy distributions.
@@ -281,6 +284,7 @@ def figure_2_policy_distributions():
 # FIGURE 3: Sachs DAG with Sobol overlay
 # ===========================================================================
 
+# NOT IN THE CURRENT MANUSCRIPT: earlier-version panel, retained for provenance.
 def figure_3_sachs_dag():
     """
     Figure 3: Sachs 11-node protein-signalling DAG with edge colours
@@ -408,6 +412,7 @@ def figure_3_sachs_dag():
 # FIGURE 4: Theorem A validation (convergence of Sobol estimator)
 # ===========================================================================
 
+# NOT IN THE CURRENT MANUSCRIPT: earlier-version panel, retained for provenance.
 def figure_4_theorem_a():
     """
     Figure 4: Sobol index estimation error vs ensemble size L (2-panel).
@@ -564,6 +569,7 @@ def figure_4_theorem_a():
 # FIGURE 1a: Framework pipeline diagram
 # ===========================================================================
 
+# NOT IN THE CURRENT MANUSCRIPT: earlier-version panel, retained for provenance.
 def figure_1a_framework():
     """
     Figure 1a: Hero figure: three panels.
@@ -766,6 +772,7 @@ def figure_1a_framework():
 # FIGURE 2 (multi-panel): BH headline figure
 # ===========================================================================
 
+# NOT IN THE CURRENT MANUSCRIPT: earlier-version panel, retained for provenance.
 def figure_2_bh_multipanel():
     """
     Figure 2 (multi-panel): BH headline figure.
@@ -937,6 +944,7 @@ def figure_2_bh_multipanel():
 # FIGURE moldesign: Molecular design 5-position vulnerability
 # ===========================================================================
 
+# NOT IN THE CURRENT MANUSCRIPT: earlier-version panel, retained for provenance.
 def figure_moldesign():
     """
     Molecular design 5-position vulnerability figure.
@@ -1095,6 +1103,12 @@ def figure_s4_calibration():
 # FIGURE S7: Supplementary ablation figure
 # ===========================================================================
 
+# REMOVED FROM THE MANUSCRIPT IN REVISION. This was Supplementary Figure S7; the
+# supplementary figures are now S1 to S7 with the controlled-LLM figure as S7.
+# It is retained only so the earlier version can be regenerated: panel a plots an
+# analytic reference curve rather than measured ensemble-size points, and marks a
+# sample-size threshold from the counting bound that the revision withdraws; panel c
+# restates a retired PCA-dimension justification. Do not cite it.
 def figure_s7_ablation():
     """
     Supplementary ablation figure.
@@ -1187,6 +1201,7 @@ def figure_s7_ablation():
 # FIGURE 3 (MULTI-PANEL): Sachs with real member data
 # ===========================================================================
 
+# NOT IN THE CURRENT MANUSCRIPT: earlier-version panel, retained for provenance.
 def figure_3_sachs_multipanel():
     """
     Full 4-panel Sachs figure with real 80-member ensemble data.
@@ -1489,6 +1504,7 @@ def figure_3_sachs_multipanel():
 # FIGURE: Grid-world multi-panel
 # ===========================================================================
 
+# NOT IN THE CURRENT MANUSCRIPT: earlier-version panel, retained for provenance.
 def figure_gridworld_multipanel():
     """
     3-panel grid-world figure (discrete mode).
@@ -1718,6 +1734,7 @@ def figure_gridworld_multipanel():
 # FIGURE: Symbolic regression multi-panel
 # ===========================================================================
 
+# NOT IN THE CURRENT MANUSCRIPT: earlier-version panel, retained for provenance.
 def figure_symreg_multipanel():
     """
     3-panel symbolic regression figure.
@@ -1913,6 +1930,7 @@ def figure_symreg_multipanel():
 # FIGURE: LLM GFlowNet multi-panel
 # ===========================================================================
 
+# NOT IN THE CURRENT MANUSCRIPT: earlier-version panel, retained for provenance.
 def figure_llm_multipanel():
     """
     3-panel LLM GFlowNet figure.
@@ -2618,6 +2636,8 @@ def figure_s3_sobol_all():
 # SUPPLEMENTARY FIGURE S8: Controlled LLM (strategy-selection GFlowNet)
 # ===========================================================================
 
+# Supplementary Figure S7 in the current manuscript. The output file keeps its earlier
+# name, fig_s8_controlled_llm.pdf, which the manuscript sources still reference.
 def figure_s8_controlled_llm():
     """
     Supplementary S8: Controlled LLM experiment.
@@ -2706,92 +2726,89 @@ def main():
     print(f"Generating figures to: {OUT_DIR}")
     print()
 
-    print("Figure 1b: Sobol heatmap (BH, real data) ...")
+    print("[not in the paper] Figure 1b: Sobol heatmap (BH) ...")
     figure_1b_sobol_heatmap()
 
-    print("Figure 1c: Total policy variance bar chart (BH, real data) ...")
+    print("[not in the paper] Figure 1c: Total policy variance bar chart (BH) ...")
     figure_1c_total_variance()
 
-    print("Figure 2 : Policy distribution comparison ...")
+    print("[not in the paper] Figure 2: Policy distribution comparison ...")
     figure_2_policy_distributions()
 
-    print("Figure 3 : Sachs DAG with Sobol overlay ...")
+    print("[not in the paper] Figure 3: Sachs DAG with Sobol overlay ...")
     figure_3_sachs_dag()
 
-    print("Figure 3 (multi-panel): Sachs real data ...")
+    print("[not in the paper] Figure 3 (multi-panel): Sachs ...")
     figure_3_sachs_multipanel()
 
-    print("Figure 4 : Theorem A validation ...")
+    print("[not in the paper] Figure 4: Theorem A validation ...")
     figure_4_theorem_a()
 
-    print("Figure 1a: Framework pipeline ...")
+    print("[not in the paper] Figure 1a: Framework pipeline ...")
     figure_1a_framework()
 
-    print("Figure 2 (multi-panel): BH headline ...")
+    print("[not in the paper] Figure 2 (multi-panel): BH headline ...")
     figure_2_bh_multipanel()
 
-    print("Figure moldesign: Molecular design vulnerability ...")
+    print("[not in the paper] Figure moldesign: Molecular design vulnerability ...")
     figure_moldesign()
 
-    print("Figure S4: Calibration coverage ...")
+    print("Supplementary Figure S4: Calibration under the naive predictive ...")
     figure_s4_calibration()
 
-    print("Figure S7: Ablation studies ...")
+    print("[REMOVED FROM THE MANUSCRIPT] former Figure S7: Ablation studies ...")
     figure_s7_ablation()
 
-    print("Figure S5: PCE vs MLP ...")
+    print("Supplementary Figure S5: PCE vs MLP ...")
     figure_s5_pce_vs_mlp()
 
-    print("Figure S6: PCE vs GP ...")
+    print("Supplementary Figure S6: PCE vs GP ...")
     figure_s6_pce_vs_gp()
 
-    print("Figure gridworld: Grid-world multi-panel ...")
+    print("[not in the paper] Figure gridworld: Grid-world multi-panel ...")
     figure_gridworld_multipanel()
 
-    print("Figure symreg: Symbolic regression multi-panel ...")
+    print("[not in the paper] Figure symreg: Symbolic regression multi-panel ...")
     figure_symreg_multipanel()
 
-    print("Figure LLM: LLM GFlowNet multi-panel ...")
+    print("[not in the paper] Figure LLM: LLM GFlowNet multi-panel ...")
     figure_llm_multipanel()
 
-    print("Figure S1: Discrete grid-world (all steps) ...")
+    print("Supplementary Figure S1: Discrete grid-world (all steps) ...")
     figure_s1_discrete_grid()
 
-    print("Figure S2: Continuous grid-world (all steps) ...")
+    print("Supplementary Figure S2: Continuous grid-world (all steps) ...")
     figure_s2_continuous_grid()
 
-    print("Figure S3: Sobol sensitivity across all tasks ...")
+    print("Supplementary Figure S3: Sobol sensitivity across all tasks ...")
     figure_s3_sobol_all()
 
-    print("Figure S8: Controlled LLM (strategy-selection GFlowNet) ...")
+    print("Supplementary Figure S7: Controlled LLM (file fig_s8_controlled_llm.pdf) ...")
     figure_s8_controlled_llm()
 
     print()
     print("Done. All figures written as vector PDF.")
-    print("Output files:")
-    print("  fig1a_framework.pdf")
-    print("  fig1b_sobol_heatmap_BH.pdf")
-    print("  fig1c_total_variance_BH.pdf")
-    print("  fig2_policy_distributions.pdf")
-    print("  fig2_bh_multipanel.pdf")
-    print("  fig3_sachs_dag.pdf")
-    print("  fig3_sachs_multipanel.pdf")
+    print()
+    print("Supplementary figures of the current manuscript:")
+    print("  S1  fig_s1_discrete_grid.pdf")
+    print("  S2  fig_s2_continuous_grid.pdf")
+    print("  S3  fig_s3_sobol_all.pdf")
+    print("  S4  fig_s4_calibration.pdf")
+    print("  S5  fig_s5_pce_vs_mlp.pdf")
+    print("  S6  fig_s6_pce_vs_gp.pdf")
+    print("  S7  fig_s8_controlled_llm.pdf   (file name kept from an earlier numbering)")
+    print()
+    print("NOT in the current manuscript, regenerated for provenance only:")
+    print("  fig_s7_ablation.pdf             (removed in revision; do not cite)")
+    print("  fig1a_framework.pdf, fig1b_sobol_heatmap_BH.pdf, fig1c_total_variance_BH.pdf")
+    print("  fig2_policy_distributions.pdf, fig2_bh_multipanel.pdf")
+    print("  fig3_sachs_dag.pdf, fig3_sachs_multipanel.pdf, fig_moldesign.pdf")
     print("  fig4_theorem_a.pdf")
-    print("  fig_moldesign.pdf")
-    print("  fig_s4_calibration.pdf")
-    print("  fig_s7_ablation.pdf")
-    print("  fig_s5_pce_vs_mlp.pdf")
-    print("  fig_s6_pce_vs_gp.pdf")
-    print("  fig_gridworld_multipanel.pdf")
-    print("  fig_symreg_multipanel.pdf")
-    print("  fig_llm_multipanel.pdf")
-    print("  fig_s1_discrete_grid.pdf")
-    print("  fig_s2_continuous_grid.pdf")
-    print("  fig_s3_sobol_all.pdf")
-    print("NOTE: Fig 1b/1c contain REAL BH data (150-member ensemble, Doyle-Dreher).")
-    print("      Fig 3 contains REAL Sachs data (80-member ensemble, pca_dim=2, pce_degree=3).")
-    print("      Fig gridworld/symreg/llm use real data when results/ dirs are populated.")
-    print("      Fig 2/4 still use synthetic/placeholder data.")
+    print("  fig_gridworld_multipanel.pdf, fig_symreg_multipanel.pdf, fig_llm_multipanel.pdf")
+    print()
+    print("NOTE: the six main-text figures are built by figures/make_figures.py, not by")
+    print("      this script. Panels whose results/ directory is missing fall back to")
+    print("      placeholder data and say so above; check that output before using one.")
 
 
 if __name__ == "__main__":

@@ -13,8 +13,9 @@ The main text has six figures:
 | 5   | `fig_rlhf.pdf`           | RLHF reward-model uncertainty                    |
 | 6   | `fig_voi.pdf`            | Value of information vs variance                 |
 
-All six are built by `figures/make_figures.py`. Eight supplementary figures (S1-S8) are built
-by `figures/generate_figures.py`. Both are covered below.
+All six are built by `figures/make_figures.py`. Seven supplementary figures (S1-S7) are built
+by `figures/generate_figures.py`, which also rebuilds earlier-version panels that the current
+manuscript does not use. Both are covered below.
 
 ## Environment
 
@@ -86,10 +87,17 @@ effects, **d** accuracy versus retained PCA dimension.
    `source_data_fragility.csv` (committed).
 
 3. Panel **c** additionally uses `results/cluster_results/bh_final/bh_shapley.json`
-   (committed), the given-data Shapley effects of the fitted surrogate. The estimator lives in
+   (committed), the given-data Shapley effects of the fitted surrogate.
+
+   **Known gap, stated plainly:** this one cache was produced by an earlier analysis run whose
+   driver script is not in this repository, so there is no command here that regenerates it.
+   Do not go looking for one. What is provided is the estimator itself,
    `decision_studies/buchwald_hartwig/shapley_effects.py`; running that file directly executes
-   its analytic linear-Gaussian validation (closed-form Shapley effects at several sample
-   sizes), which is what establishes that the estimator is trustworthy at L = 50.
+   its analytic linear-Gaussian validation (exhaustive given-data estimator against closed-form
+   Shapley effects, at several sample sizes), which is what establishes that the estimator is
+   trustworthy at L = 50. Rather than ship a reconstructed driver that would print different
+   numbers from the committed ones, we leave the provenance gap visible. Every other input to
+   every main-text figure has a driver listed in the table below.
 
 * Entry point: `figures/make_figures.py` -> `fig_bh()`
 
@@ -169,7 +177,7 @@ reward-model ensemble of `bh_closed_loop.py`, the `bo` domain reuses `bo_oed_rea
 | `cluster_results/bh_final/ensemble_analysis.json`        | `decision_studies/common/analyze_ensemble.py`                  |
 | `cluster_results/bh_final/source_data_fragility.csv`     | `decision_studies/common/analyze_ensemble.py`                  |
 | `cluster_results/bh_final/bh_robustness.json`            | `decision_studies/buchwald_hartwig/bh_robustness.py`           |
-| `cluster_results/bh_final/bh_shapley.json`               | estimator in `decision_studies/buchwald_hartwig/shapley_effects.py` |
+| `cluster_results/bh_final/bh_shapley.json`               | no driver in this repository (earlier analysis run); estimator in `decision_studies/buchwald_hartwig/shapley_effects.py` |
 | `cluster_results/bh_closed_loop/bh_closed_loop.json`     | `decision_studies/buchwald_hartwig/bh_closed_loop.py`          |
 | `cluster_results/bh_closed_loop/bh_confound_control.json`| `decision_studies/buchwald_hartwig/bh_confound_control.py`     |
 | `cluster_results/bh_closed_loop/bh_ensemble_convergence.json` | `decision_studies/buchwald_hartwig/bh_ensemble_convergence.py` |
@@ -313,7 +321,7 @@ Each control script takes `--main_dir` and `--control_dir` (see `--help`) pointi
 ensembles; the Buchwald-Hartwig version of the same control is the optional `BH_NOISE_CONTROL=1`
 stage of `lsf/submit_bh.sh`.
 
-## Supplementary figures (S1-S8)
+## Supplementary figures (S1-S7)
 
 ```bash
 python figures/generate_figures.py
@@ -322,19 +330,37 @@ python figures/generate_figures.py
 Writes the supplementary PDFs into `figures/`. This script reads the per-experiment result
 directories under `results/`, so run the relevant experiment first; when a directory is absent
 the panel falls back to placeholder data and says so on the console, so check the console output
-before using a regenerated panel. The script also rebuilds a number of earlier-version panels
-that the current manuscript does not cite.
+before using a regenerated panel.
 
 | Fig | File                        | Produced from                                                      |
 |-----|-----------------------------|---------------------------------------------------------------------|
 | S1  | `fig_s1_discrete_grid.pdf`  | `results/gridworld/discrete/` (`experiments/gridworld/run_experiment.py --mode discrete`) |
 | S2  | `fig_s2_continuous_grid.pdf`| `results/gridworld/continuous/` (`--mode continuous`)               |
 | S3  | `fig_s3_sobol_all.pdf`      | `results/{gridworld/discrete,gridworld/continuous,symreg,llm_gfn}/results.json` |
-| S4  | `fig_s4_calibration.pdf`    | coverage values recorded in the Buchwald-Hartwig and Sachs runs, embedded in the plotting script (no results file is read) |
+| S4  | `fig_s4_calibration.pdf`    | coverage under the naive ensemble-spread predictive, recorded in the Buchwald-Hartwig and Sachs runs and embedded in the plotting script (no results file is read); the manuscript retains it to document the over-coverage diagnosis, and reports the proper Gaussian predictive in the calibration table instead |
 | S5  | `fig_s5_pce_vs_mlp.pdf`     | `results/baselines/comparison.json` (`experiments/baselines/run_baselines.py`) |
 | S6  | `fig_s6_pce_vs_gp.pdf`      | `results/baselines/comparison.json`                                 |
-| S7  | `fig_s7_ablation.pdf`       | ablation reference curves embedded in the plotting script (no results file is read) |
-| S8  | `fig_s8_controlled_llm.pdf` | `results/controlled_llm/results.json` (`experiments/controlled_llm/run_experiment.py`) |
+| S7  | `fig_s8_controlled_llm.pdf` | `results/controlled_llm/results.json` (`experiments/controlled_llm/run_experiment.py`) |
+
+The file name `fig_s8_controlled_llm.pdf` is kept from an earlier numbering: the
+controlled-LLM figure is **Supplementary Figure S7** in the current manuscript.
+
+### Figures this script builds that are NOT in the current manuscript
+
+`generate_figures.py` also rebuilds panels from earlier versions of the study. They are
+retained for provenance, they are flagged as such in the script and on its console output, and
+**no figure in the current manuscript comes from any of them**. Do not treat them as
+reproductions of anything in the paper:
+
+| Output file                       | Status                                                          |
+|-----------------------------------|-----------------------------------------------------------------|
+| `fig_s7_ablation.pdf`             | **Removed from the manuscript in revision.** Its ensemble-size panel plotted an analytic reference curve rather than measured points, and marked a sample-size threshold derived from the counting bound that this revision withdraws; its third panel restated a retired PCA-dimension justification. |
+| `fig1a_framework.pdf`, `fig1b_sobol_heatmap_BH.pdf`, `fig1c_total_variance_BH.pdf` | Superseded by main-text Figs 1 and 2 (`figures/make_figures.py`). |
+| `fig2_policy_distributions.pdf`, `fig2_bh_multipanel.pdf` | Superseded by main-text Fig 2.                    |
+| `fig3_sachs_dag.pdf`, `fig3_sachs_multipanel.pdf` | Sachs is now a negative control; no attribution figure is reported. |
+| `fig_moldesign.pdf`               | Molecular design is now a negative control; no attribution figure is reported. |
+| `fig4_theorem_a.pdf`              | Not cited by the current manuscript.                            |
+| `fig_gridworld_multipanel.pdf`, `fig_symreg_multipanel.pdf`, `fig_llm_multipanel.pdf` | Earlier per-task composites; the manuscript uses S1, S2 and S3 instead. |
 
 Commands for the underlying experiments:
 
@@ -350,9 +376,61 @@ python experiments/gridworld/d_scalability.py     # d-scalability sweep
 
 ## Lean 4 formal verification
 
-```bash
-cd lean && lake build
+### Prerequisite: Mathlib4 must sit beside this repository
+
+`lean/lakefile.lean` declares
+
 ```
+require mathlib from ".." / ".." / "mathlib4"
+```
+
+which resolves to a directory named `mathlib4` **beside this repository**, not to a git
+dependency. A bare clone will not build until that checkout exists, so do this first:
+
+```bash
+# 1. Lean toolchain manager (once; skip if elan is already installed)
+curl https://elan.lean-lang.org/elan-init.sh -sSf | sh
+
+# 2. Mathlib4 beside this repository, at the toolchain pinned in lean/lean-toolchain
+cd ..                                       # parent of uq-gflownet-release
+git clone https://github.com/leanprover-community/mathlib4.git
+cd mathlib4
+git checkout v4.30.0-rc1                    # must match lean/lean-toolchain
+cat lean-toolchain                          # expect: leanprover/lean4:v4.30.0-rc1
+lake exe cache get                          # prebuilt Mathlib artifacts
+```
+
+`lean/lean-toolchain` pins `leanprover/lean4:v4.30.0-rc1`, and the Mathlib checkout must
+declare exactly the same toolchain. If the tag above is absent, or its `lean-toolchain` prints
+anything else, check out instead any Mathlib commit whose `lean-toolchain` matches exactly;
+Lake will refuse to proceed on a mismatch.
+
+**Expected timings.** Step 2 dominates: `lake exe cache get` downloads several GB of prebuilt
+Mathlib artifacts and finishes in minutes on a fast connection, whereas without that cache Lake
+compiles Mathlib from source, which takes hours. Nothing has hung until the Mathlib step is
+past. The development itself is a single file and compiles quickly once Mathlib is in place.
+
+### Build and audit
+
+```bash
+cd uq-gflownet-release/lean
+lake build                      # compiles PCESurrogate.lean; no errors, no warnings about sorry
+lake env lean AxiomCheck.lean   # prints the axiom dependencies of each lemma
+```
+
+`lean/AxiomCheck.lean` imports `PCESurrogate` and runs `#print axioms` on all eight lemmas plus
+the auxiliary one, so the axiom claim is reproducible in one command without reading the
+proofs. Each line should read
+
+```
+'<name>' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
+possibly with a subset of those three. Any mention of `sorryAx`, or of an axiom outside that
+list, would contradict the manuscript. The audit file is not part of the default build target
+(`lean_lib PCESurrogate`), so it cannot affect the library build; run it explicitly as above.
+
+### What is proved
 
 `lean/PCESurrogate.lean` machine-checks **eight lemmas covering the seven numbered results
 T1-T7** of the manuscript (T3 is split into T3a positivity and T3b normalisation), plus the
@@ -364,9 +442,17 @@ a stated hypothesis (T1 assumes the Sobolev decay rate; T2 assumes a shared poly
 l^2 coefficient convergence and positive total variance, and is for the first-order indices; T4
 assumes a Lipschitz constant, supplied for the softmax link by T5).
 
-The Lean version is pinned in `lean/lean-toolchain`. The project requires a Mathlib4 checkout as
-a sibling directory of this repository, as declared by the `require` line of
-`lean/lakefile.lean`; use a Mathlib revision matching the pinned toolchain.
+| Result | Lean lemma                    | Audited by `AxiomCheck.lean` |
+|--------|-------------------------------|------------------------------|
+| T1     | `pce_error_tendsto_zero`      | yes                          |
+| T2     | `sobol_convergence_from_L2`   | yes                          |
+| T3a    | `softmax_positive`            | yes                          |
+| T3b    | `softmax_sums_to_one`         | yes                          |
+| T4     | `uncertainty_propagation`     | yes                          |
+| T5     | `softmax_lipschitz`           | yes                          |
+| T6     | `softmax_shift_invariant`     | yes                          |
+| T7     | `value_diff_le_l1`            | yes                          |
+| (aux)  | `simplex_l1_le_two`           | yes                          |
 
 ## Random seeds and determinism
 

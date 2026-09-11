@@ -152,6 +152,20 @@ gold reward curves against the best-of-n pool size.
 
 * Entry point: `figures/make_figures.py` -> `fig_rlhf()`
 
+The Supplementary Information also reports a direct check that the top-variance reward-model
+mode m1 is the uniform-offset direction to which the softmax is invariant (Theorem 6):
+
+```bash
+python decision_studies/rlhf/rlhf_shift_mode.py \
+    --out results/cluster_results/rlhf_real
+```
+
+Writes `results/cluster_results/rlhf_real/rlhf_shift_mode.json` (committed): the |cosine|
+between the PC1 loading vector and the normalized all-ones vector, the share of the ensemble
+score variance along the all-ones direction (computed without PCA), and the PC1 variance
+fraction, averaged over prompts and seeds. Same prerequisites as `rlhf_real_v2.py`; the GPT-2
+candidate pool is regenerated with a fixed torch seed.
+
 ### Figure 6: value of information (`fig_voi.pdf`)
 
 Panels **a-c** and **f** come from the spectra, panels **d,e** from the acquisition simulation.
@@ -187,6 +201,7 @@ reward-model ensemble of `bh_closed_loop.py`, the `bo` domain reuses `bo_oed_rea
 | `cluster_results/bo_oed_seq/bo_oed_sequential.json`      | `decision_studies/bayesian_optimization/bo_oed_sequential.py`  |
 | `cluster_results/rlhf_real/rlhf_real_v2_results.json`    | `decision_studies/rlhf/rlhf_real_v2.py`                        |
 | `cluster_results/rlhf_real/rlhf_real_results.json`       | `decision_studies/rlhf/rlhf_real.py`                           |
+| `cluster_results/rlhf_real/rlhf_shift_mode.json`         | `decision_studies/rlhf/rlhf_shift_mode.py`                     |
 | `cluster_results/rlhf/rlhf_results.json`                 | `decision_studies/rlhf/rlhf_demo.py`                           |
 | `cluster_results/voi/voi_spectra.json`                   | `decision_studies/value_of_information/value_of_information.py`|
 | `cluster_results/voi/voi_acquisition.json`               | `decision_studies/value_of_information/voi_acquisition.py`     |

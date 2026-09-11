@@ -67,7 +67,9 @@ decision_studies/             Decision-making studies under learned-model uncert
   bayesian_optimization/      BO / optimal experimental design on the real
                               reaction space; exactly-valid KL-mode indices.
   rlhf/                       RLHF reward-model uncertainty: best-of-n study
-                              on real human preferences (hh-rlhf).
+                              on real human preferences (hh-rlhf), and the
+                              check that the top-variance mode is the
+                              uniform-offset direction (rlhf_shift_mode.py).
   value_of_information/       Value-of-information spectrum (decision-relevant
                               vs total uncertainty) and VoI-guided acquisition.
   controls/                   Training-noise controls (applicability diagnostic)

@@ -146,7 +146,7 @@ def fig_voi():
     sp = load("voi/voi_spectra.json"); aq = load("voi/voi_acquisition.json")
     fig, ax = plt.subplots(2, 3, figsize=(10.2, 6.0))
     specs = [("BH", "a  Chemistry (Buchwald–Hartwig)"), ("BO", "b  Experimental design (BO)"),
-             ("RLHF", "c  Alignment (RLHF)")]
+             ("RLHF", "c  Language-model alignment (RLHF)")]
     corrs = {}
     for k, (dom, ttl) in enumerate(specs):
         r = sp[dom]; vf = np.array(r["var_frac"]); vs = np.array(r["value_sobol_first"])

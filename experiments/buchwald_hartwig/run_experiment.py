@@ -566,8 +566,8 @@ def collect_and_analyze(
     output_dir: str,
     n_train: int = 50,
     n_test: int = 100,
-    pce_degree: int = 5,
-    pca_dim: int = 2,
+    pce_degree: int = 3,
+    pca_dim: int = 5,
     n_mc: int = 10000,
     dataset: dict = None,
 ) -> dict:
@@ -766,10 +766,10 @@ def collect_and_analyze(
 def run_buchwald_hartwig_sequential(
     n_train: int = 50,
     n_test: int = 100,
-    pce_degree: int = 5,
+    pce_degree: int = 3,
     gfn_episodes: int = 3000,
     train_fraction: float = 0.3,
-    pca_dim: int = 2,
+    pca_dim: int = 5,
     n_mc: int = 10000,
     device: str = "cpu",
     output_dir: str = "results/buchwald_hartwig",
@@ -872,10 +872,10 @@ if __name__ == "__main__":
                              "analyze: collect from saved member files (after SLURM array).")
     parser.add_argument("--n_train", type=int, default=50)
     parser.add_argument("--n_test", type=int, default=100)
-    parser.add_argument("--pce_degree", type=int, default=5)
+    parser.add_argument("--pce_degree", type=int, default=3)   # paper configuration
     parser.add_argument("--gfn_episodes", type=int, default=3000)
     parser.add_argument("--train_fraction", type=float, default=0.3)
-    parser.add_argument("--pca_dim", type=int, default=2)
+    parser.add_argument("--pca_dim", type=int, default=5)      # paper configuration
     parser.add_argument("--output_dir", default="results/buchwald_hartwig")
     parser.add_argument("--csv_path", default=None,
                         help="Path to Dreher_and_Doyle_input_data.csv")

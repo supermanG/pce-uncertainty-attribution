@@ -19,9 +19,11 @@ def main():
     timings = {}
 
     if args.experiment in ("bh","all"):
-        from experiments.buchwald_hartwig.run_experiment import run_buchwald_hartwig_experiment
+        # Generates the ensemble members; the paper's PCE analysis of them is
+        # decision_studies/common/analyze_ensemble.py (degree 3, d = 5, 7, 10), see REPRODUCE.md.
+        from experiments.buchwald_hartwig.run_experiment import run_buchwald_hartwig_sequential
         t0 = time.time()
-        run_buchwald_hartwig_experiment(
+        run_buchwald_hartwig_sequential(
             n_train=10 if args.quick else 50, n_test=20 if args.quick else 100,
             gfn_episodes=500 if args.quick else 3000, device=device)
         timings["buchwald_hartwig"] = time.time()-t0

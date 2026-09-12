@@ -84,7 +84,10 @@ effects, **d** accuracy versus retained PCA dimension.
    ```
 
    Writes `results/cluster_results/bh_final/ensemble_analysis.json` (committed) and
-   `source_data_fragility.csv` (committed).
+   `source_data_fragility.csv` (committed). The member-generation script's own PCE
+   arguments (`--pce_degree`, `--pca_dim`) drive only an in-script quick look and default to
+   the paper configuration (degree 3, d = 5); every number in the paper comes from this
+   post-analysis.
 
 3. Panel **c** additionally uses `results/cluster_results/bh_final/bh_shapley.json`
    (committed), the given-data Shapley effects of the fitted surrogate.

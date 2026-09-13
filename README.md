@@ -4,7 +4,7 @@
 
 Nartallo-Kaluarachchi, R., Ubaru, S., Zimon, M.J., Huh, D.,
 Manson-Sawko, R., Horesh, L., Bengio, Y. (2026)
-*Nature Machine Intelligence* (under review)
+*Nature Machine Intelligence* (accepted in principle, September 2026)
 
 ---
 
@@ -313,7 +313,7 @@ supports the T5 proof and is audited alongside the eight.
              Manson-Sawko, Robert and Horesh, Lior and Bengio, Yoshua},
   journal = {Nature Machine Intelligence},
   year    = {2026},
-  note    = {Under review}
+  note    = {Accepted in principle, September 2026}
 }
 ```
 

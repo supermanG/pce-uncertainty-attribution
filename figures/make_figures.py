@@ -5,14 +5,18 @@ Second-round revision (September 2026): fonts embedded as TrueType (Type 42) so 
 pass journal preflight, larger tick/legend/annotation fonts, panel titles that no longer
 collide, spelled-out labels ("reward-model" instead of "RM", a proper beta), American
 spelling in axis labels, and a framework schematic that states the input and output of
-every stage. No number changes: every value is read from the archived result files.
+every stage. Final-submission pass (September 2026, editorial checklist): Fig. 2c shows the
+bootstrap distribution of the Sobol' indices as box plots (n = 200 resamples, archived in
+bh_bootstrap_samples.json) instead of bars with interval whiskers; Fig. 4a-c overlay the
+five individual seeds on the seed means. No number changes: every value is read from the
+archived result files.
 """
 import json, os, sys
 import numpy as np
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-from matplotlib.patches import FancyBboxPatch, FancyArrowPatch
+from matplotlib.patches import FancyBboxPatch, FancyArrowPatch, Patch
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CR = os.path.join(ROOT, "results", "cluster_results")
@@ -54,15 +58,27 @@ def fig_bh():
     title(ax[0, 1], "b  Sparse versus dense surrogate")
     ax[0, 1].tick_params(axis="x", rotation=20)
     modes = [f"m{i+1}" for i in range(5)]
-    bfa = p5["bootstrap_first_order"]["3"]                  # additive step: first-order Sobol + 90% CI
-    so = np.array(bfa["mean"]); lo = np.array(bfa["lo"]); hi = np.array(bfa["hi"])
+    # additive step: the 200 model-conditional bootstrap resamples of the first-order Sobol'
+    # vector (bh_bootstrap_samples.py reproduces the archived mean / 5th / 95th percentiles)
+    bs = load("bh_final/bh_bootstrap_samples.json")["steps"]["additive"]
+    S = np.array(bs["samples"])                               # (n_boot, 5)
     shp = np.array(sh["additive"]["shapley"])[:5]
     x = np.arange(5); w = 0.4
-    ax[1, 0].bar(x - w/2, so, w, yerr=[so - lo, hi - so], capsize=2,
-                 label="first-order Sobol' (90% CI)", color=OK[0])
-    ax[1, 0].bar(x + w/2, shp, w, label="Shapley effect (surrogate)", color=OK[1])
-    ax[1, 0].set_xticks(x); ax[1, 0].set_xticklabels(modes); ax[1, 0].legend(frameon=False, loc="upper left")
-    ax[1, 0].set_ylim(0, max(hi.max(), shp.max()) * 1.38)
+    ax[1, 0].boxplot([S[:, i] for i in range(5)], positions=x - w/2, widths=w * 0.85,
+                     whis=(5, 95), showmeans=True, patch_artist=True,
+                     boxprops=dict(facecolor=OK[0], edgecolor=OK[0], alpha=0.85),
+                     medianprops=dict(color="black", lw=1.0),
+                     meanprops=dict(marker="D", markerfacecolor="white", markeredgecolor="black",
+                                    markersize=3.2, markeredgewidth=0.7),
+                     whiskerprops=dict(color=OK[0], lw=0.9), capprops=dict(color=OK[0], lw=0.9),
+                     flierprops=dict(marker="o", markersize=2.2, markerfacecolor=OK[0],
+                                     markeredgecolor="none", alpha=0.7))
+    ax[1, 0].bar(x + w/2, shp, w, color=OK[1])
+    handles = [Patch(facecolor=OK[0], alpha=0.85, label=f"first-order Sobol', bootstrap (n = {S.shape[0]})"),
+               Patch(facecolor=OK[1], label="Shapley effect (surrogate)")]
+    ax[1, 0].set_xticks(x); ax[1, 0].set_xticklabels(modes)
+    ax[1, 0].legend(handles=handles, frameon=False, loc="upper left")
+    ax[1, 0].set_ylim(0, max(S.max(), shp.max()) * 1.30)
     ax[1, 0].set_ylabel("share of decision variance")
     ax[1, 0].set_xlabel("uncertainty mode")
     title(ax[1, 0], "c  Additive step: Sobol' versus Shapley")
@@ -80,13 +96,26 @@ def fig_bo():
     bo = load("bo_oed_real/bo_oed_real_v2_results.json")
     syn = load("bo_oed/bo_oed_results.json")
     fig, ax = plt.subplots(1, 3, figsize=(9.8, 3.1))
-    fo = bo["mode_first_order_mean"]
-    ax[0].bar([f"m{i+1}" for i in range(len(fo))], fo, color=OK[0])
+    fo = bo["mode_first_order_mean"]; per_mode = np.array(bo["mode_first_order_per_seed"])   # (seeds, d)
+    xm = np.arange(len(fo))
+    ax[0].bar(xm, fo, color=OK[0], label=f"mean over seeds (n = {per_mode.shape[0]})")
+    for j, xj in enumerate(xm):                               # individual seeds as open circles
+        ax[0].scatter(xj + np.linspace(-0.2, 0.2, per_mode.shape[0]), per_mode[:, j], s=8,
+                      facecolors="white", edgecolors="black", linewidths=0.6, zorder=3)
+    ax[0].scatter([], [], s=8, facecolors="white", edgecolors="black", linewidths=0.6, label="individual seeds")
+    ax[0].set_xticks(xm); ax[0].set_xticklabels([f"m{i+1}" for i in range(len(fo))])
+    ax[0].set_ylim(0, per_mode.max() * 1.45); ax[0].legend(frameon=False, loc="upper right")
     ax[0].set_ylabel("first-order Sobol'"); ax[0].set_xlabel("posterior mode (KL, variance-ranked)")
     title(ax[0], "a  Acquisition attribution\n(real Doyle–Dreher)")
     conv = bo["convergence_relMSE_by_d"]; dd = sorted(int(k) for k in conv)
     ax[1].errorbar(dd, [conv[str(k)]["mean"] for k in dd], yerr=[conv[str(k)]["sd"] for k in dd],
-                   fmt="o-", color=OK[2], capsize=2, label="real reaction space")
+                   fmt="o-", color=OK[2], capsize=2, label="real reaction space (mean ± s.d.)")
+    per_d = bo["convergence_relMSE_by_d_per_seed"]
+    for k in dd:                                              # individual seeds as open circles
+        v = per_d[str(k)]
+        ax[1].scatter(k + np.linspace(-0.25, 0.25, len(v)), v, s=8, facecolors="white",
+                      edgecolors=OK[2], linewidths=0.6, zorder=3)
+    ax[1].scatter([], [], s=8, facecolors="white", edgecolors=OK[2], linewidths=0.6, label="individual seeds")
     convs = syn["convergence_relMSE_by_d"]; dds = sorted(int(k) for k in convs)
     ax[1].plot(dds, [convs[str(k)] for k in dds], "s--", color=OK[1], label="synthetic GP (exact)")
     ax[1].axhline(1, ls=":", c="gray", lw=0.8)
@@ -97,6 +126,10 @@ def fig_bo():
     vals = [bo["relMSE"]["mean"], syn["relMSE"]]
     errs = [bo["relMSE"]["sd"], 0]
     ax[2].bar(labels, vals, yerr=errs, capsize=3, color=[OK[2], OK[1]])
+    rs = bo["relMSE_per_seed"]                                # individual seeds as open circles
+    ax[2].scatter(np.linspace(-0.15, 0.15, len(rs)), rs, s=10, facecolors="white",
+                  edgecolors="black", linewidths=0.6, zorder=3, label="individual seeds")
+    ax[2].legend(frameon=False, loc="upper right")
     ax[2].axhline(1, ls=":", c="gray", lw=0.8); ax[2].set_ylabel("test relative MSE")
     ax[2].set_ylim(0, 1.12)
     title(ax[2], "c  Surrogate accuracy")

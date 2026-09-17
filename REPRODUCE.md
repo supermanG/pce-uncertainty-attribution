@@ -132,7 +132,7 @@ python decision_studies/bayesian_optimization/bo_oed_demo.py \
     --out results/cluster_results/bo_oed
 ```
 
-Write `results/cluster_results/bo_oed_real/bo_oed_real_v2_results.json` and
+Write `results/cluster_results/bo_oed_real/bo_oed_real_v2_results.json` (seed means and s.d., plus the per-seed values that Fig. 4a-c overlay) and
 `results/cluster_results/bo_oed/bo_oed_results.json` (both committed).
 
 * Entry point: `figures/make_figures.py` -> `fig_bo()`
@@ -194,6 +194,7 @@ reward-model ensemble of `bh_closed_loop.py`, the `bo` domain reuses `bo_oed_rea
 | `cluster_results/bh_final/ensemble_analysis.json`        | `decision_studies/common/analyze_ensemble.py`                  |
 | `cluster_results/bh_final/source_data_fragility.csv`     | `decision_studies/common/analyze_ensemble.py`                  |
 | `cluster_results/bh_final/bh_robustness.json`            | `decision_studies/buchwald_hartwig/bh_robustness.py`           |
+| `cluster_results/bh_final/bh_bootstrap_samples.json`     | `decision_studies/buchwald_hartwig/bh_bootstrap_samples.py` (the 200 bootstrap resamples behind the Fig. 2c box plots; reproduces the archived mean / 5th / 95th percentiles exactly) |
 | `cluster_results/bh_final/bh_shapley.json`               | no driver in this repository (earlier analysis run); estimator in `decision_studies/buchwald_hartwig/shapley_effects.py` |
 | `cluster_results/bh_closed_loop/bh_closed_loop.json`     | `decision_studies/buchwald_hartwig/bh_closed_loop.py`          |
 | `cluster_results/bh_closed_loop/bh_confound_control.json`| `decision_studies/buchwald_hartwig/bh_confound_control.py`     |

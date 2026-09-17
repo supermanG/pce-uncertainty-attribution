@@ -72,7 +72,15 @@ def run(out_dir, degree=3, n_obs=30, n_cand=15, d=8, seeds=5):
                mutual_coherence=dict(zip(["mean", "sd"], _mean_sd(coh_seed))),
                mode_first_order_mean=modes.tolist(),
                convergence_relMSE_by_d={str(dd): dict(zip(["mean", "sd"], _mean_sd(v)))
-                                        for dd, v in conv_seed.items()})
+                                        for dd, v in conv_seed.items()},
+               # per-seed values (seed s = a different random set of observed reactions and
+               # posterior draws), kept so the figures can overlay the individual points
+               relMSE_per_seed=[float(x) for x in rel_seed],
+               fragility_per_seed=[float(x) for x in frag_seed],
+               mutual_coherence_per_seed=[float(x) for x in coh_seed],
+               convergence_relMSE_by_d_per_seed={str(dd): [float(x) for x in v]
+                                                 for dd, v in conv_seed.items()},
+               mode_first_order_per_seed=[m.tolist() for m in modes_seed])
     json.dump(res, open(os.path.join(out_dir, "bo_oed_real_v2_results.json"), "w"), indent=2)
     print("=== Real BO/OED (multi-seed) ===")
     print(f"seeds={seeds}, K={n_cand}, d={d}, var_expl={var_expl:.2f}")

@@ -192,8 +192,8 @@ See [`REPRODUCE.md`](REPRODUCE.md) for the full per-figure reproduction recipe.
 
 ## Code Ocean capsule
 
-`run` at the repository root is the entry point of the Code Ocean compute capsule and
-also works locally:
+`run` at the repository root is the entry point of the Code Ocean compute capsule (the
+repository imported into `/code`) and also works locally:
 
 ```bash
 bash run
@@ -201,10 +201,10 @@ bash run
 
 It runs the unit tests of the PCE core and rebuilds the six main-text figures from the
 committed result files, writing them with a SHA-256 list to `/results` on Code Ocean or
-to `results/capsule/` elsewhere. `environment/Dockerfile` is the capsule environment
-(Python 3.14, numpy, scipy, matplotlib, pytest; CPU only) and `metadata/metadata.yml` its
-record. The heavy experiments are not part of the capsule; their recipes are in
-[REPRODUCE.md](REPRODUCE.md).
+to `results/capsule/` elsewhere. `codeocean/environment/Dockerfile` is the capsule
+environment (Python 3.14, numpy, scipy, matplotlib, pytest; CPU only) and
+`codeocean/metadata/metadata.yml` its record; see `codeocean/README.md`. The heavy
+experiments are not part of the capsule; their recipes are in [REPRODUCE.md](REPRODUCE.md).
 
 ## Requirements
 

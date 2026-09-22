@@ -2,9 +2,11 @@
 #
 # The capsule runs the fast path only (unit tests of the PCE core, and every main-text
 # figure rebuilt from the committed result files), so it is CPU-only and does not
-# install PyTorch. Versions match the paper's reporting summary. If the repository is
-# imported into the capsule's /code folder rather than cloned as a capsule, paste this
-# file into the capsule's environment editor.
+# install PyTorch. Versions match the paper's reporting summary. Code Ocean imports the
+# repository into the capsule's /code folder; set the environment from this file (or a
+# Python starter environment plus these four pip packages) in the capsule's environment
+# editor. It lives under codeocean/ rather than at the root so that the import is not
+# mistaken for a capsule layout, which would leave /code empty.
 FROM python:3.14-slim
 
 ENV PYTHONDONTWRITEBYTECODE=1 \

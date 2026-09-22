@@ -7,20 +7,23 @@
 # numpy, scipy, matplotlib and pytest only: no GPU, no dataset download, no retraining.
 # About one minute on one CPU core.
 #
-# Outputs go to /results on Code Ocean, or to results/capsule/ anywhere else.
+# On Code Ocean the repository is imported into /code (so this file is /code/run, the
+# capsule entry point) and outputs go to /results; anywhere else they go to results/capsule/.
+# codeocean/ holds the capsule environment (Dockerfile) and metadata record.
 set -euo pipefail
 cd "$(dirname "${BASH_SOURCE[0]}")"
 
 if [ -d /results ] && [ -w /results ]; then OUT=/results; else OUT="$PWD/results/capsule"; fi
 mkdir -p "$OUT"
 export MPLBACKEND=Agg
+PY="$(command -v python3 || command -v python)"
 export SOURCE_DATE_EPOCH=1789603200   # pins the PDF timestamps, so reruns are byte-identical
 
 echo "== 1/2  unit tests of the PCE core (tests/)"
-python -m pytest tests -q 2>&1 | tee "$OUT/pytest.txt"
+"$PY" -m pytest tests -q 2>&1 | tee "$OUT/pytest.txt"
 
 echo "== 2/2  main-text figures from the committed results (figures/make_figures.py)"
-python figures/make_figures.py 2>&1 | tee "$OUT/make_figures.txt"
+"$PY" figures/make_figures.py 2>&1 | tee "$OUT/make_figures.txt"
 for f in fig_framework fig_bh_revised fig_bh_closedloop fig_bo_oed fig_rlhf fig_voi; do
     cp "figures/$f.pdf" "$OUT/$f.pdf"
 done

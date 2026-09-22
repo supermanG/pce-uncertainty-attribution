@@ -44,7 +44,7 @@ retraining, and takes a few seconds.
 
 `bash run` does the same after running the unit tests, and copies the PDFs with a SHA-256
 list to `results/capsule/`; it is the entry point of the Code Ocean compute capsule, whose
-environment is `environment/Dockerfile`.
+environment is `codeocean/environment/Dockerfile` (see `codeocean/README.md`).
 
 ## Per-figure recipes
 

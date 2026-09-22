@@ -13,6 +13,7 @@ archived result files.
 """
 import json, os, sys
 import numpy as np
+os.environ.setdefault("SOURCE_DATE_EPOCH", "1758067200")   # deterministic PDF dates (reproducible bytes)
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt

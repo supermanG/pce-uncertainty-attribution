@@ -4,7 +4,8 @@
 # Reproduces, from the result files committed under results/cluster_results/, every
 # main-text figure of "Interpretable attribution of decision-relevant uncertainty in AI"
 # (Nature Machine Intelligence, 2026), and runs the unit tests of the PCE core. Needs
-# numpy, scipy, matplotlib and pytest only: no GPU, no dataset download, no retraining.
+# numpy, scipy, scikit-learn, matplotlib and pytest only: no GPU, no dataset download, no
+# retraining.
 # About one minute on one CPU core.
 #
 # On Code Ocean the repository is imported into /code (so this file is /code/run, the

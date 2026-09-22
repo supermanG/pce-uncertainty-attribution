@@ -4,7 +4,7 @@
 # figure rebuilt from the committed result files), so it is CPU-only and does not
 # install PyTorch. Versions match the paper's reporting summary. Code Ocean imports the
 # repository into the capsule's /code folder; set the environment from this file (or a
-# Python starter environment plus these four pip packages) in the capsule's environment
+# Python starter environment plus these five pip packages) in the capsule's environment
 # editor. It lives under codeocean/ rather than at the root so that the import is not
 # mistaken for a capsule layout, which would leave /code empty.
 FROM python:3.14-slim
@@ -17,5 +17,6 @@ RUN pip install --upgrade pip && \
     pip install \
         numpy==2.4.3 \
         scipy==1.17.1 \
+        scikit-learn==1.8.0 \
         matplotlib==3.10.8 \
         pytest==9.0.3

@@ -202,7 +202,7 @@ bash run
 It runs the unit tests of the PCE core and rebuilds the six main-text figures from the
 committed result files, writing them with a SHA-256 list to `/results` on Code Ocean or
 to `results/capsule/` elsewhere. `codeocean/environment/Dockerfile` is the capsule
-environment (Python 3.14, numpy, scipy, matplotlib, pytest; CPU only) and
+environment (Python 3.14, numpy, scipy, scikit-learn, matplotlib, pytest; CPU only) and
 `codeocean/metadata/metadata.yml` its record; see `codeocean/README.md`. The heavy
 experiments are not part of the capsule; their recipes are in [REPRODUCE.md](REPRODUCE.md).
 

@@ -7,8 +7,9 @@ and rebuilds the six main-text figures from the committed result files, writing 
 SHA-256 list to `/results`.
 
 - `environment/Dockerfile`: the capsule environment (python:3.14-slim, numpy 2.4.3,
-  scipy 1.17.1, matplotlib 3.10.8, pytest 9.0.3; CPU only). Set it in the capsule's
-  environment editor, or pick a Python starter environment and add the four pip packages.
+  scipy 1.17.1, scikit-learn 1.8.0, matplotlib 3.10.8, pytest 9.0.3; CPU only). Set it in
+  the capsule's environment editor, or pick a Python starter environment and add the five pip
+  packages (the sparse-PCE unit test imports scikit-learn).
 - `metadata/metadata.yml`: the capsule record (title, description, tags, authors and
   affiliations), to be entered in the capsule's metadata panel.
 

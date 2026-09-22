@@ -1,6 +1,6 @@
 # uq-gflownet
 
-**Interpretable epistemic uncertainty attribution for decision-making under learned-model uncertainty**
+**Interpretable attribution of decision-relevant uncertainty in AI**
 
 Nartallo-Kaluarachchi, R., Ubaru, S., Zimon, M.J., Huh, D.,
 Manson-Sawko, R., Horesh, L., Bengio, Y. (2026)
@@ -306,8 +306,7 @@ supports the T5 proof and is audited alongside the eight.
 
 ```bibtex
 @article{nartallo2026uqgfn,
-  title   = {Interpretable epistemic uncertainty attribution for
-             decision-making under learned-model uncertainty},
+  title   = {Interpretable attribution of decision-relevant uncertainty in AI},
   author  = {Nartallo-Kaluarachchi, Ram\'on and Ubaru, Shashanka and
              Zimon, Ma{\l}gorzata J. and Huh, Dongsung and
              Manson-Sawko, Robert and Horesh, Lior and Bengio, Yoshua},

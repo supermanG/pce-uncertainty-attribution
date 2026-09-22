@@ -1,0 +1,50 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite the paper below and this repository."
+type: software
+title: "pce-uncertainty-attribution: code for 'Interpretable attribution of decision-relevant uncertainty in AI'"
+license: MIT
+repository-code: https://github.com/supermanG/pce-uncertainty-attribution
+version: 1.0.0
+date-released: 2026-09-22
+authors:
+  - family-names: Nartallo-Kaluarachchi
+    given-names: Ramón
+    affiliation: Mathematical Institute, University of Oxford
+  - family-names: Ubaru
+    given-names: Shashanka
+    affiliation: IBM Research, Thomas J. Watson Research Center
+  - family-names: Zimon
+    given-names: Małgorzata J.
+    affiliation: IBM Research Europe; UK Fusion Energy
+  - family-names: Huh
+    given-names: Dongsung
+    affiliation: MIT-IBM Watson AI Lab
+  - family-names: Manson-Sawko
+    given-names: Robert
+    affiliation: IBM Research Europe
+  - family-names: Horesh
+    given-names: Lior
+    affiliation: IBM Research, Thomas J. Watson Research Center
+  - family-names: Bengio
+    given-names: Yoshua
+    affiliation: Université de Montréal; Mila - Quebec AI Institute
+preferred-citation:
+  type: article
+  title: Interpretable attribution of decision-relevant uncertainty in AI
+  journal: Nature Machine Intelligence
+  year: 2026
+  authors:
+    - family-names: Nartallo-Kaluarachchi
+      given-names: Ramón
+    - family-names: Ubaru
+      given-names: Shashanka
+    - family-names: Zimon
+      given-names: Małgorzata J.
+    - family-names: Huh
+      given-names: Dongsung
+    - family-names: Manson-Sawko
+      given-names: Robert
+    - family-names: Horesh
+      given-names: Lior
+    - family-names: Bengio
+      given-names: Yoshua

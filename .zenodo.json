@@ -1,0 +1,27 @@
+{
+  "title": "pce-uncertainty-attribution: code for \"Interpretable attribution of decision-relevant uncertainty in AI\"",
+  "upload_type": "software",
+  "access_right": "open",
+  "license": "MIT",
+  "description": "<p>A polynomial surrogate of a few trained models reveals which components of a learned model's uncertainty a decision depends on, and how much resolving each is worth, in chemistry, experimental design and language-model alignment. This is the version of the code used for the paper <em>Interpretable attribution of decision-relevant uncertainty in AI</em> (Nature Machine Intelligence, 2026): ensemble training, polynomial chaos expansion (PCE) surrogate fitting, Sobol' and Shapley computation, calibration, figure generation and the Lean 4 proofs. The root <code>run</code> script rebuilds every main-text figure from the committed result files and runs the unit tests (CPU only, about a minute); REPRODUCE.md has the per-figure recipes for the full experiments.</p>",
+  "keywords": [
+    "uncertainty quantification",
+    "polynomial chaos expansion",
+    "Sobol indices",
+    "Shapley values",
+    "value of information",
+    "generative models",
+    "GFlowNet",
+    "Bayesian optimization",
+    "RLHF"
+  ],
+  "creators": [
+    {"name": "Nartallo-Kaluarachchi, Ramón", "affiliation": "Mathematical Institute, University of Oxford"},
+    {"name": "Ubaru, Shashanka", "affiliation": "IBM Research, Thomas J. Watson Research Center"},
+    {"name": "Zimon, Małgorzata J.", "affiliation": "IBM Research Europe; UK Fusion Energy"},
+    {"name": "Huh, Dongsung", "affiliation": "MIT-IBM Watson AI Lab"},
+    {"name": "Manson-Sawko, Robert", "affiliation": "IBM Research Europe"},
+    {"name": "Horesh, Lior", "affiliation": "IBM Research, Thomas J. Watson Research Center"},
+    {"name": "Bengio, Yoshua", "affiliation": "Université de Montréal; Mila - Quebec AI Institute"}
+  ]
+}

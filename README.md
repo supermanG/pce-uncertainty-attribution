@@ -1,4 +1,4 @@
-# uq-gflownet
+# pce-uncertainty-attribution
 
 **Interpretable attribution of decision-relevant uncertainty in AI**
 
@@ -158,8 +158,8 @@ REPRODUCE.md                  Step-by-step reproducibility manifest.
 ## Quick start
 
 ```bash
-git clone https://github.com/supermanG/uq-gflownet-release
-cd uq-gflownet-release
+git clone https://github.com/supermanG/pce-uncertainty-attribution
+cd pce-uncertainty-attribution
 pip install -r requirements.txt
 
 # Rebuild the six main-text figures from the committed result JSONs (seconds, CPU)
@@ -259,7 +259,7 @@ bash lsf/submit_bh.sh           # per-member trainers, then the analysis job
 > curl https://elan.lean-lang.org/elan-init.sh -sSf | sh
 >
 > # 2. Mathlib4 beside this repository, at the toolchain pinned in lean/lean-toolchain
-> cd ..                                       # parent of uq-gflownet-release
+> cd ..                                       # parent of pce-uncertainty-attribution
 > git clone https://github.com/leanprover-community/mathlib4.git
 > cd mathlib4
 > git checkout v4.30.0-rc1                    # must match lean/lean-toolchain
@@ -267,7 +267,7 @@ bash lsf/submit_bh.sh           # per-member trainers, then the analysis job
 > lake exe cache get                          # prebuilt Mathlib artifacts
 >
 > # 3. Build the development, then audit its axioms
-> cd ../uq-gflownet-release/lean
+> cd ../pce-uncertainty-attribution/lean
 > lake build
 > lake env lean AxiomCheck.lean
 > ```

@@ -411,7 +411,7 @@ dependency. A bare clone will not build until that checkout exists, so do this f
 curl https://elan.lean-lang.org/elan-init.sh -sSf | sh
 
 # 2. Mathlib4 beside this repository, at the toolchain pinned in lean/lean-toolchain
-cd ..                                       # parent of uq-gflownet-release
+cd ..                                       # parent of pce-uncertainty-attribution
 git clone https://github.com/leanprover-community/mathlib4.git
 cd mathlib4
 git checkout v4.30.0-rc1                    # must match lean/lean-toolchain
@@ -432,7 +432,7 @@ past. The development itself is a single file and compiles quickly once Mathlib 
 ### Build and audit
 
 ```bash
-cd uq-gflownet-release/lean
+cd pce-uncertainty-attribution/lean
 lake build                      # compiles PCESurrogate.lean; no errors, no warnings about sorry
 lake env lean AxiomCheck.lean   # prints the axiom dependencies of each lemma
 ```

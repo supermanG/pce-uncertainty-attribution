@@ -5,6 +5,7 @@ title: "pce-uncertainty-attribution: code for 'Interpretable attribution of deci
 license: MIT
 repository-code: https://github.com/supermanG/pce-uncertainty-attribution
 version: 1.0.0
+doi: 10.5281/zenodo.22904515
 date-released: 2026-09-22
 authors:
   - family-names: Nartallo-Kaluarachchi

@@ -6,6 +6,12 @@ Nartallo-Kaluarachchi, R., Ubaru, S., Zimon, M.J., Huh, D.,
 Manson-Sawko, R., Horesh, L., Bengio, Y. (2026)
 *Nature Machine Intelligence* (accepted in principle, September 2026)
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22904515.svg)](https://doi.org/10.5281/zenodo.22904515)
+
+Version v1.0.0 is the code used for the paper, archived at Zenodo under DOI
+[10.5281/zenodo.22904515](https://doi.org/10.5281/zenodo.22904515)
+(concept DOI for all versions: [10.5281/zenodo.22904514](https://doi.org/10.5281/zenodo.22904514)).
+
 ---
 
 ## Overview
@@ -329,6 +335,23 @@ supports the T5 proof and is audited alongside the eight.
   journal = {Nature Machine Intelligence},
   year    = {2026},
   note    = {Accepted in principle, September 2026}
+}
+```
+
+For the code itself (the version used for the paper):
+
+```bibtex
+@software{nartallo2026pceuq_code,
+  title     = {pce-uncertainty-attribution: code for ``Interpretable attribution of
+               decision-relevant uncertainty in AI''},
+  author    = {Nartallo-Kaluarachchi, Ram'on and Ubaru, Shashanka and
+               Zimon, Ma{\l}gorzata J. and Huh, Dongsung and
+               Manson-Sawko, Robert and Horesh, Lior and Bengio, Yoshua},
+  year      = {2026},
+  version   = {v1.0.0},
+  publisher = {Zenodo},
+  doi       = {10.5281/zenodo.22904515},
+  url       = {https://github.com/supermanG/pce-uncertainty-attribution}
 }
 ```
 

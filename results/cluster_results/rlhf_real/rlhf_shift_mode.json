@@ -1,0 +1,28 @@
+{
+  "dataset": "Anthropic/hh-rlhf",
+  "n_prompts": 48,
+  "n": 16,
+  "M": 120,
+  "seeds": 3,
+  "offset_share": {
+    "mean": 0.8785241258861521,
+    "sd": 0.012423453928689616
+  },
+  "cos_pc1": {
+    "mean": 0.9982470995229152,
+    "sd": 0.00045877395610243143
+  },
+  "var_frac_pc1": {
+    "mean": 0.8811172979573408,
+    "sd": 0.011902840589350424
+  },
+  "cos_pc1_min_over_prompts": {
+    "mean": 0.9902679560085138,
+    "sd": 0.0037276472957870153
+  },
+  "offset_share_min_over_prompts": {
+    "mean": 0.6070867575686446,
+    "sd": 0.03960411371474402
+  },
+  "note": "offset_share = share of the ensemble score variance along the all-ones direction (the softmax kernel); cos_pc1 = |cosine| of the PC1 loading with that direction; means over prompts, then mean/sd over seeds."
+}

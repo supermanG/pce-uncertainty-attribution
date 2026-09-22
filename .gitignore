@@ -21,8 +21,14 @@ env/
 .DS_Store
 Thumbs.db
 
-# Results (generated, can be large)
-results/
+# Results are generated and can be large. Only the committed result files that the
+# figure fast path and REPRODUCE.md rely on are tracked.
+results/*
+!results/cluster_results/
+!results/beta_vae_gridworld_results.json
+!results/outputs/
+results/outputs/*
+!results/outputs/sobol_scale_summary.json
 
 # Data (downloaded separately)
 data/*.csv

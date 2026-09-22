@@ -1,0 +1,46 @@
+metadata_version: 1
+name: "pce-uncertainty-attribution: code for 'Interpretable attribution of decision-relevant uncertainty in AI'"
+description: |
+  A polynomial surrogate of a few trained models reveals which components of a learned
+  model's uncertainty a decision depends on, and how much resolving each is worth, in
+  chemistry, experimental design and language-model alignment. This capsule reproduces
+  every main-text figure of the Nature Machine Intelligence paper from the committed
+  result files and runs the unit tests of the polynomial chaos expansion (PCE) core;
+  CPU only, about one minute. The full experiments (GFlowNet ensembles for
+  Buchwald-Hartwig reaction design, Bayesian optimization, RLHF reward models) and the
+  Lean 4 proofs are in the repository, with per-figure recipes in REPRODUCE.md.
+tags:
+  - uncertainty quantification
+  - polynomial chaos expansion
+  - Sobol indices
+  - Shapley values
+  - value of information
+  - generative models
+  - GFlowNet
+  - Bayesian optimization
+  - RLHF
+authors:
+  - name: Ramón Nartallo-Kaluarachchi
+    affiliations:
+      - name: Mathematical Institute, University of Oxford
+  - name: Shashanka Ubaru
+    affiliations:
+      - name: IBM Research, Thomas J. Watson Research Center
+  - name: Małgorzata J. Zimon
+    affiliations:
+      - name: IBM Research Europe, Daresbury
+      - name: UK Fusion Energy, Culham Campus
+  - name: Dongsung Huh
+    affiliations:
+      - name: MIT-IBM Watson AI Lab
+  - name: Robert Manson-Sawko
+    affiliations:
+      - name: IBM Research Europe, Daresbury
+  - name: Lior Horesh
+    affiliations:
+      - name: IBM Research, Thomas J. Watson Research Center
+  - name: Yoshua Bengio
+    affiliations:
+      - name: Université de Montréal, Mila - Quebec AI Institute
+corresponding_contributor:
+  name: Lior Horesh

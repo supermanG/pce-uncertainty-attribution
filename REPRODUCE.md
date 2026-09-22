@@ -42,6 +42,10 @@ This reads only the JSONs committed under `results/cluster_results/` and writes
 `fig_rlhf.pdf` and `fig_voi.pdf` into `figures/`. It needs no GPU, no dataset download and no
 retraining, and takes a few seconds.
 
+`bash run` does the same after running the unit tests, and copies the PDFs with a SHA-256
+list to `results/capsule/`; it is the entry point of the Code Ocean compute capsule, whose
+environment is `environment/Dockerfile`.
+
 ## Per-figure recipes
 
 Each recipe lists the driver that produces the underlying result JSON, the JSON it writes (the

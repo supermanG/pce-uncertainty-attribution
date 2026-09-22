@@ -344,7 +344,7 @@ For the code itself (the version used for the paper):
 @software{nartallo2026pceuq_code,
   title     = {pce-uncertainty-attribution: code for ``Interpretable attribution of
                decision-relevant uncertainty in AI''},
-  author    = {Nartallo-Kaluarachchi, Ram'on and Ubaru, Shashanka and
+  author    = {Nartallo-Kaluarachchi, Ram\'on and Ubaru, Shashanka and
                Zimon, Ma{\l}gorzata J. and Huh, Dongsung and
                Manson-Sawko, Robert and Horesh, Lior and Bengio, Yoshua},
   year      = {2026},
